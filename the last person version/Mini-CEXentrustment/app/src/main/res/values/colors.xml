@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorWrite">#FFFFFF</color>
+    <color name="colorWrite2">#F0F0F0</color>
+
+    <!--reds-->
+    <color name="md_red_50">#FFEBEE</color>
+    <color name="md_red_100">#FFCDD2</color>
+    <color name="md_red_200">#EF9A9A</color>
+    <color name="md_red_300">#E57373</color>
+    <color name="md_red_400">#EF5350</color>
+    <color name="md_red_500">#F44336</color>
+    <color name="md_red_600">#E53935</color>
+    <color name="md_red_700">#D32F2F</color>
+    <color name="md_red_800">#C62828</color>
+    <color name="md_red_900">#B71C1C</color>
+    <color name="md_red_A100">#FF8A80</color>
+    <color name="md_red_A200">#FF5252</color>
+    <color name="md_red_A400">#FF1744</color>
+    <color name="md_red_A700">#D50000</color>
+
+    <!--pinks-->
+    <color name="md_pink_50">#FCE4EC</color>
+    <color name="md_pink_100">#F8BBD0</color>
+    <color name="md_pink_200">#F48FB1</color>
+    <color name="md_pink_300">#F06292</color>
+    <color name="md_pink_400">#EC407A</color>
+    <color name="md_pink_500">#E91E63</color>
+    <color name="md_pink_600">#D81B60</color>
+    <color name="md_pink_700">#C2185B</color>
+    <color name="md_pink_800">#AD1457</color>
+    <color name="md_pink_900">#880e4F</color>
+    <color name="md_pink_A100">#FF80AB</color>
+    <color name="md_pink_A200">#FF4081</color>
+    <color name="md_pink_A400">#F50057</color>
+    <color name="md_pink_A700">#C51162</color>
+
+    <!--blue-->
+    <color name="md_blue_50">#E3F2FD</color>
+    <color name="md_blue_100">#BBDEFB</color>
+    <color name="md_blue_200">#90CAF9</color>
+    <color name="md_blue_300">#64B5F6</color>
+    <color name="md_blue_400">#42A5F5</color>
+    <color name="md_blue_500">#2196F3</color>
+    <color name="md_blue_600">#1E88E5</color>
+    <color name="md_blue_700">#1976D2</color>
+    <color name="md_blue_800">#1565C0</color>
+    <color name="md_blue_900">#0D47A1</color>
+    <color name="md_blue_A100">#82B1FF</color>
+    <color name="md_blue_A200">#448AFF</color>
+    <color name="md_blue_A400">#2979FF</color>
+    <color name="md_blue_A700">#2962FF</color>
+    <color name="md_blue_A600">#286BCC</color>
+
+    <!-- brown-->
+    <color name="md_brown_50">#EFEBE9</color>
+    <color name="md_brown_100">#D7CCC8</color>
+    <color name="md_brown_200">#BCAAA4</color>
+    <color name="md_brown_300">#A1887F</color>
+    <color name="md_brown_400">#8D6E63</color>
+    <color name="md_brown_500">#795548</color>
+    <color name="md_brown_600">#6D4C41</color>
+    <color name="md_brown_700">#5D4037</color>
+    <color name="md_brown_800">#4E342E</color>
+    <color name="md_brown_900">#3E2723</color>
+
+    <!-- greys-->
+    <color name="md_grey_50">#FAFAFA</color>
+    <color name="md_grey_100">#F5F5F5</color>
+    <color name="md_grey_200">#EEEEEE</color>
+    <color name="md_grey_300">#E0E0E0</color>
+    <color name="md_grey_400">#BDBDBD</color>
+    <color name="md_grey_500">#9E9E9E</color>
+    <color name="md_grey_600">#757575</color>
+    <color name="md_grey_700">#616161</color>
+    <color name="md_grey_800">#424242</color>
+    <color name="md_grey_900">#212121</color>
+
+    <!--blue greys-->
+    <color name="md_blue_grey_50">#ECEFF1</color>
+    <color name="md_blue_grey_100">#CFD8DC</color>
+    <color name="md_blue_grey_200">#B0BEC5</color>
+    <color name="md_blue_grey_300">#90A4AE</color>
+    <color name="md_blue_grey_400">#78909C</color>
+    <color name="md_blue_grey_500">#607D8B</color>
+    <color name="md_blue_grey_600">#546E7A</color>
+    <color name="md_blue_grey_700">#455A64</color>
+    <color name="md_blue_grey_800">#37474F</color>
+    <color name="md_blue_grey_900">#263238</color>
+
+
+    <color name="md_black_10">#272727</color>
+    <color name="md_black_50">#3C3C3C</color>
+    <color name="md_black_100">#4F4F4F</color>
+    <color name="md_black_200">#5B5B5B</color>
+    <color name="md_black_300">#6C6C6C</color>
+    <color name="md_black_400">#7B7B7B</color>
+    <color name="md_black_500">#8E8E8E</color>
+    <color name="md_black_600">#9D9D9D</color>
+    <color name="md_black_700">#ADADAD</color>
+    <color name="md_black_800">#BEBEBE</color>
+    <color name="md_black_900">#d0d0d0</color>
+    <color name="md_black_A100">#E0E0E0</color>
+    <color name="md_black_A200">#F0F0F0</color>
+    <color name="md_black_A400">#FCFCFC</color>
+    <color name="md_black_A500">#FFFFFF</color>
+    <color name="md_black_A700">#000000</color>
+
+    <color name="md_green_10">#99FF99</color>
+    <color name="md_green_50">#66FF66</color>
+    <color name="md_green_100">#33FF33</color>
+    <color name="md_green_200">#00FF00</color>
+    <color name="md_green_300">#00DD00</color>
+    <color name="md_green_400">#00AA00</color>
+    <color name="md_green_500">#008800</color>
+    <color name="md_green_600">#88AA00</color>
+    <color name="md_green_700">#668800</color>
+
+    <color name="md_yello_10">#FFFBBB</color>
+    <color name="md_yello_50">#FFFF77</color>
+    <color name="md_yello_100">#FFFF33</color>
+    <color name="md_yello_200">#FFFF00</color>
+    <color name="md_yello_300">#EEEE00</color>
+    <color name="md_yello_400">#FFEE99</color>
+    <color name="md_yello_500">#FFDD55</color>
+    <color name="md_yello_600">#FFCC22</color>
+    <color name="md_yello_700">#FFBB00</color>
+    <color name="md_yello_800">#DDAA00</color>
+
+    <color name="md_orange_10">#FFDDAA</color>
+    <color name="md_orange_50">#FFBB66</color>
+    <color name="md_orange_100">#FFAA33</color>
+    <color name="md_orange_200">#FF8800</color>
+    <color name="md_orange_300">#EE7700</color>
+    <color name="md_orange_400">#CC6600</color>
+    <color name="md_orange_500">#BB5500</color>
+
+    <!--日系原色-->
+    <color name="jp_hai">#828282</color>          <!--灰-->
+    <color name="jp_keshizumi">#434343</color>    <!--消炭-->
+    <color name="jp_shironeri">#FCFAF2</color>    <!--白練-->
+    <color name="jp_shironezumi">#BDC0BA</color>  <!--白鼠-->
+
+    <color name="jp_ainezumi">#566C73</color>  <!--藍鼠-->
+    <color name="jp_chigusa">#3A8FB7</color>  <!--千草-->
+</resources>

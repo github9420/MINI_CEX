@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Mini-CEX entrustment App</string>
+    <string name="app_name2">Mini-CEX entrustment App</string>
+    <string name="app_name3">請選擇身份為老師或者學生</string>
+    <string name="app_name4">選擇後仍可在「設定」選單中切換</string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">帳號</string>
+    <string name="prompt_email2">e-mail</string>
+    <string name="prompt_email3">e-mail(帳號)</string>
+    <string name="prompt_password">密碼</string>
+    <string name="action_sign_in">登入</string>
+    <string name="action_forget_password">忘記密碼</string>
+    <string name="action_registered">申請試用</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">帳號不正確</string>
+    <string name="error_invalid_password">密碼字數小於4碼</string>
+    <string name="error_incorrect_password">密碼不正確</string>
+    <string name="error_incorrect_password_match">密碼與確認密碼不符</string>
+    <string name="error_field_required">此欄位必填</string>
+    <string name="permission_rationale">提供電子郵件需要聯繫人權限</string>
+    <string name="error_invalid_phone">電話字數小於10碼</string>
+
+    <string name="system_send">系統通知</string>
+    <string name="confirm">確定</string>
+
+    <string name="password_change_exception">密碼變更異常</string>
+    <string name="password_change_success">密碼變更成功</string>
+
+    <string name="send_setting_password_email_exception">寄送重設密碼信件異常</string>
+    <string name="send_setting_password_email_success">寄送重設密碼信件成功</string>
+    <string name="send_setting_password_email_emailDoesNotExist">信箱不存在</string>
+
+
+    <string name="registered_exception">申請試用異常</string>
+    <string name="registered_success">申請試用成功</string>
+    <string name="registered_accountHasBeenUsed">帳號已註冊</string>
+    <string name="registered_groupAlreadyExist">組織已註冊</string>
+
+    <string name="sign_in_exception">登入異常</string>
+    <string name="sign_in_success">登入成功</string>
+
+    <string name="reset_password">重設密碼</string>
+
+    <string name="new_prompt_password">密碼</string>
+    <string name="action_forget_password_short">確認密碼</string>
+    <string name="confirm_new_prompt_password">再次輸入密碼</string>
+    <string name="action_confirm_forget_password_short">確認密碼</string>
+    <string name="submit">送出</string>
+    <string name="cancel">取消</string>
+
+
+    <!-- Strings related to registered -->
+    <string name="action_registered_short">Registered</string>
+    <string name="name">姓名</string>
+
+    <string name="unit">公司/單位名稱</string>
+    <string name="mobile_phone">手機號碼</string>
+    <string name="phone">室內電話</string>
+    <string name="phone_Ex">分機號碼</string>
+
+    <string name="teacher">老師</string>
+    <string name="student">學生</string>
+
+
+</resources>
+
