@@ -236,6 +236,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            Log.d(TAG,"text isempty?"+TextUtils.isEmpty(password));
+            Log.d(TAG,"password length="+password.length());
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -257,20 +259,31 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             // form field with an error.
             focusView.requestFocus();
         } else {
+
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
+
              /*實作登入*/
             TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String deviceId = tm.getDeviceId();
+            Log.i(TAG,"get into here2");
+            //String deviceId = tm.getDeviceId();
 
+            String deviceId ="9774d56d682e549c";
+
+            Log.i(TAG,"get into here");
 
             Map<String, String> map = new HashMap<String, String>();
             map.put("userPassword", email); //隨機8碼
             map.put("password", password);
             map.put("phoneId", deviceId);
+            Log.i(TAG,"userPassword:"+email);
+            Log.i(TAG,"password:"+password);
+            Log.i(TAG,"phoneID:"+deviceId);
             NetTask netTask =  new NetTask();
             netTask.initJSONObject(map);
             netTask.setCommandType(CommandType.account_user_authentication);
@@ -286,7 +299,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 4;
     }
 
     /**
