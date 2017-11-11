@@ -38,6 +38,7 @@ public class ServerConnect {
         URL url;
         try {
             url = new URL(addr);
+            Log.e(TAG,addr);
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("invalid url: " + addr);
         }
@@ -60,56 +61,57 @@ public class ServerConnect {
         try {
             Log.e("URL", "> " + url);
             http = (HttpURLConnection) url.openConnection();
-            http.setRequestMethod("POST");
+            http.setConnectTimeout(3000);
+
             http.setDoInput(true);
 
             http.setDoOutput(true);
-
+            http.setRequestMethod("POST");
             http.setUseCaches(false);
 
             http.setFixedLengthStreamingMode(bytes.length);
-            Log.e("error", "1 ");
-            http.setRequestProperty("Host", GDefine.host);
-            Log.e("error", "2 ");
+            //Log.e("error", "1 ");
+            //http.setRequestProperty("Host", GDefine.host);
+            //Log.e("error", "2 ");
             http.setRequestProperty("Content-Type", "application/json");
-            Log.e("error", "3 ");
+            //Log.e("error", "3 ");
             http.setRequestProperty("charset", "UTF-8");
-            Log.e("error", "4 ");
+            //Log.e("error", "4 ");
             http.setRequestProperty("Content-Length", Integer.toString(bytes.length));
-            Log.e("error", "5 ");
+            //Log.e("error", "5 ");
             // post the request
             OutputStream out = http.getOutputStream();
-            Log.e("error", "6 ");
+            //Log.e("error", "6 ");
             OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
-            Log.e("error", "7 ");
+            //Log.e("error", "7 ");
             BufferedWriter writer = new BufferedWriter(outWriter);
-            Log.e("error", "8 ");
+            //Log.e("error", "8 ");
             writer.write(body.toString());
-            Log.e("error", "9 ");
+            //Log.e("error", "9 ");
 //            writer.write(data.toString());
             writer.flush();
-            Log.e("error", "10 ");
+            //Log.e("error", "10 ");
             byte[] str = writer.toString().getBytes();
-            Log.e("error", "11 ");
+            //Log.e("error", "11 ");
             Log.d(TAG, new String(str, "UTF-8"));
 
-            Log.e("error", "12 ");writer.close();
+            //Log.e("error", "12 ");writer.close();
             out.close();
-            Log.e("error", "13 ");
+            //Log.e("error", "13 ");
             http.connect();
-            Log.e("error", "14 ");
+            //Log.e("error", "14 ");
             Log.d(TAG,http.toString());
-            Log.e("error", "15 ");
+            //Log.e("error", "15 ");
             if(http != null) {
                 responseCode = String.valueOf(http.getResponseCode());
-                Log.e("error", "16 ");
+                //Log.e("error", "16 ");
                 if(Integer.valueOf(responseCode) == HttpURLConnection.HTTP_OK) {
                     // Correct password
                     //取得回傳的inputStream (輸入流串)
                     InputStream inputStream = http.getInputStream();
-                    Log.e("error", "17 ");
+                    //Log.e("error", "17 ");
                     responseCode = dispatchCommandType(changeInputStream(inputStream), qType, context);
-                    Log.e("error", "18 ");
+                    //Log.e("error", "18 ");
                 } else {
                     Log.e("error", "19 ");
                     throw new IOException("Post failed with error code : " + responseCode);
@@ -120,7 +122,6 @@ public class ServerConnect {
 //            InputStream inStream = http.getErrorStream();       post
 //            Map<String, List<String>> map = http.getHeaderFields();
         } catch (Exception e){
-            Log.e(TAG,"fail here");
             e.printStackTrace();
         } finally {
             if (http != null) {
@@ -159,12 +160,20 @@ public class ServerConnect {
         {
             case account_user_authentication:
                 if(jsonObject.get("result").equals("true")){
-                    Log.d(TAG,"fuck me here");
+
                     String token = jsonObject.get("token").toString();
                     String account = jsonObject.get("account").toString();
                     String userId = jsonObject.get("userId").toString();
                     String phoneId = jsonObject.get("phoneId").toString();
-                    Log.d(TAG,"token:"+token+"account:"+account+"userId:"+"phoneID"+phoneId);
+                    //Log.d(TAG,"token:"+token+"account:"+account+"userId:"+"phoneID"+phoneId);
+                    Log.d(TAG,"token:"+token);
+                    Log.d(TAG,"account:"+account);
+                    Log.d(TAG,"userId:"+userId);
+                    Log.d(TAG,"phoneId:"+phoneId);
+
+
+
+
                     mToken = token;
                     try {
                         // 再次進行登入

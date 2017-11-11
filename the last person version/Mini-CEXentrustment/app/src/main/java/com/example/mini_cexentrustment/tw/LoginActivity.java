@@ -19,6 +19,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -182,6 +183,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         getLoaderManager().initLoader(0, null, this);
     }
 
+    //Ask the permission by myself
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -195,11 +197,11 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE}, REQUEST_READ_CONTACTS);
                         }
                     });
         } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE}, REQUEST_READ_CONTACTS);
         }
         return false;
     }
@@ -211,7 +213,10 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                populateAutoComplete();
+//            }
+            if (grantResults.length  >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
             }
         }
@@ -238,6 +243,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
         boolean cancel = false;
         View focusView = null;
+
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -274,40 +280,16 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             //mAuthTask.execute((Void) null);
 
              /*實作登入*/
-            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            Log.i(TAG, "get into here2");
-            //String deviceId = tm.getDeviceId();
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            int Request_ead_phone_state=0;
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[] {READ_PHONE_STATE},
-                        Request_ead_phone_state
-                );
-                Log.i(TAG,"hi there");
-
-               // return;
-            }else{
-                Log.i(TAG,"i have the permission");
-
-            }
             String deviceId = telephonyManager.getDeviceId();
             //String deviceId ="9774d56d682e549c";
 
             Log.i(TAG,"get into here");
             Log.i(TAG,"phoneID="+deviceId);
             Map<String, String> map = new HashMap<String, String>();
-            map.put("userPassword", "upstairs0102@gmail.com"); //隨機8碼
-            map.put("password", "1234");
-            map.put("phoneId", "");
+            map.put("account", email); //隨機8碼
+            map.put("userPassword",password);
+            map.put("phoneId", deviceId);
             Log.i(TAG,"userPassword:"+email);
             Log.i(TAG,"password:"+password);
             Log.i(TAG,"phoneID:"+deviceId);    //HTC A9 ID:352636074136792
