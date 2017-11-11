@@ -7,8 +7,8 @@ public final class GDefine {
 	/**
 	 * POST method
 	 */
-	public final static String host = "220.133.185.190"; //網址
-	public final static String url = "http://220.133.185.190"; //網址
+	public final static String host = "http://minicexentrustment.azurewebsites.net/api"; //網址
+	public final static String url = "http://minicexentrustment.azurewebsites.net/api/"; //網址
 	public final static String account_user_authentication = url + "account/user-authentication"; // 使用者身份驗證(release platform)
 
 	public final static String account_user_login = url + "account/user-login"; // 登入(release platform)

@@ -76,7 +76,7 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
         // TODO
         super.onPostExecute(result);
         Log.i("return answer =",result);
-        if(result == "-1") {
+        if(result=="-1") {
             if(mContext instanceof LoginActivity){
                 if (qType == CommandType.account_user_authentication) {
                     Notice.setHandler((LoginActivity) mContext);

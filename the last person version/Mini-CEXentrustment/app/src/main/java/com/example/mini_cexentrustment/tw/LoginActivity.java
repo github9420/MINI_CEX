@@ -304,21 +304,17 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
             Log.i(TAG,"get into here");
             Log.i(TAG,"phoneID="+deviceId);
-
-
-            //Map<String, String> map = new HashMap<String, String>();
             Map<String, String> map = new HashMap<String, String>();
-            map.put("userPassword", email); //隨機8碼
-            map.put("password", password);
-            map.put("phoneId", deviceId);
+            map.put("userPassword", "upstairs0102@gmail.com"); //隨機8碼
+            map.put("password", "1234");
+            map.put("phoneId", "");
             Log.i(TAG,"userPassword:"+email);
             Log.i(TAG,"password:"+password);
             Log.i(TAG,"phoneID:"+deviceId);    //HTC A9 ID:352636074136792
-
             NetTask netTask =  new NetTask();
             netTask.initJSONObject(map);
             netTask.setCommandType(CommandType.account_user_authentication);
-            netTask.setActiveContext(LoginActivity.this);
+            netTask.setActiveContext(this);
             netTask.execute();
         }
     }
