@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -42,6 +43,7 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
     private Button btn_submit;
     private Button btn_cancel;
 
+    private final static String TAG = LoginActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +174,9 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
             cancel = true;
         }
 
-        if(!isPasswordMachValid(password, confimPassword)){
+        if(!isPasswordMatchValid(password, confimPassword)){
+            Log.i(TAG,"password="+password);
+            Log.i(TAG,"confirmpassword="+confimPassword);
             mConfimPasswordView.setError(getString(R.string.error_incorrect_password_match));
             focusView = mConfimPasswordView;
             cancel = true;
@@ -287,7 +291,7 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 4;
     }
 
     private boolean isPhoneValid(String phone) {
@@ -295,12 +299,13 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
         return phone.length() > 9;
     }
 
-    private boolean isPasswordMachValid(String password, String confirmPassword) {
+    private boolean isPasswordMatchValid(String password, String confirmPassword) {
         //TODO: Replace this with your own logic
-        if(password == confirmPassword){
+        if(password.equals(confirmPassword) ){
             return true;
         }
         return false;
+
     }
 
 }

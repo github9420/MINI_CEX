@@ -15,7 +15,7 @@
     <string name="action_registered">申請試用</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">帳號不正確</string>
-    <string name="error_invalid_password">密碼字數小於4碼</string>
+    <string name="error_invalid_password">密碼字數小於5碼</string>
     <string name="error_incorrect_password">密碼不正確</string>
     <string name="error_incorrect_password_match">密碼與確認密碼不符</string>
     <string name="error_field_required">此欄位必填</string>

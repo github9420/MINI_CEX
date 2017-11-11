@@ -1,5 +1,6 @@
 package com.example.mini_cexentrustment.tw;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import com.example.mini_cexentrustment.R;
 import com.example.mini_cexentrustment.define.CommandType;
 import com.example.mini_cexentrustment.framework.BaseActivity;
@@ -42,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.READ_PHONE_STATE;
 
 /**
  * A login screen that offers login via email/password.
@@ -59,7 +63,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-           // "foo@example.com:hello", "bar@example.com:world"
+            // "foo@example.com:hello", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -89,10 +93,11 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         Log.d(TAG, "初始化 LoginActivity 畫面");
         initFormControl();
     }
+
     /**
      *  初始化操作表單
      */
-    private  void initFormControl(){
+    private void initFormControl() {
         // Set up the login form.
         Log.d(TAG, "初始化 設定操作表單");
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -123,45 +128,45 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         mProgressView = findViewById(R.id.login_progress);
 
         //2.註冊按鈕
-        btn_registered = (Button)findViewById(R.id.btn_registered);
+        btn_registered = (Button) findViewById(R.id.btn_registered);
         btn_registered.setOnClickListener(click_btn_registered);
 
         //3.忘記密碼按鈕
-        btn_forget_password = (Button)findViewById(R.id.btn_forget_password);
+        btn_forget_password = (Button) findViewById(R.id.btn_forget_password);
         btn_forget_password.setOnClickListener(click_btn_forget_password);
     }
 
     /**
      *  申請登入事件
      */
-    private OnClickListener click_btn_registered = new OnClickListener(){
+    private OnClickListener click_btn_registered = new OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent newAct = new Intent();
-            newAct.setClass( LoginActivity.this, RegisteredActivity.class);
+            newAct.setClass(LoginActivity.this, RegisteredActivity.class);
             startActivity(newAct);
         }
     };
     /**
      *  忘記密碼事件
      */
-    private OnClickListener click_btn_forget_password = new OnClickListener(){
+    private OnClickListener click_btn_forget_password = new OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent newAct = new Intent();
-            newAct.setClass( LoginActivity.this, ForgetPasswordActivity.class);
+            newAct.setClass(LoginActivity.this, ForgetPasswordActivity.class);
             startActivity(newAct);
         }
     };
 
     @Override
     public void executeCompleteCallback(String jsonData) {
-        if(jsonData == "1"){
+        if (jsonData == "1") {
             //需改密碼
             Intent newAct = new Intent();
-            newAct.setClass( LoginActivity.this, ResetPassword.class);
+            newAct.setClass(LoginActivity.this, ResetPassword.class);
             startActivity(newAct);
-        }else if(jsonData == "2"){
+        } else if (jsonData == "2") {
             //正常登入
             Intent newAct = new Intent();
             //newAct.setClass( LoginActivity.this, ResetPassword.class);
@@ -236,8 +241,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            Log.d(TAG,"text isempty?"+TextUtils.isEmpty(password));
-            Log.d(TAG,"password length="+password.length());
+            Log.d(TAG, "text isempty?" + TextUtils.isEmpty(password));
+            Log.d(TAG, "password length=" + password.length());
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -270,20 +275,46 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
              /*實作登入*/
             TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            Log.i(TAG,"get into here2");
+            Log.i(TAG, "get into here2");
             //String deviceId = tm.getDeviceId();
+            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            int Request_ead_phone_state=0;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[] {READ_PHONE_STATE},
+                        Request_ead_phone_state
+                );
+                Log.i(TAG,"hi there");
 
-            String deviceId ="9774d56d682e549c";
+               // return;
+            }else{
+                Log.i(TAG,"i have the permission");
+
+            }
+            String deviceId = telephonyManager.getDeviceId();
+            //String deviceId ="9774d56d682e549c";
 
             Log.i(TAG,"get into here");
+            Log.i(TAG,"phoneID="+deviceId);
 
+
+            //Map<String, String> map = new HashMap<String, String>();
             Map<String, String> map = new HashMap<String, String>();
             map.put("userPassword", email); //隨機8碼
             map.put("password", password);
             map.put("phoneId", deviceId);
             Log.i(TAG,"userPassword:"+email);
             Log.i(TAG,"password:"+password);
-            Log.i(TAG,"phoneID:"+deviceId);
+            Log.i(TAG,"phoneID:"+deviceId);    //HTC A9 ID:352636074136792
+
             NetTask netTask =  new NetTask();
             netTask.initJSONObject(map);
             netTask.setCommandType(CommandType.account_user_authentication);
