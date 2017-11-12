@@ -63,6 +63,13 @@
     <string name="teacher">老師</string>
     <string name="student">學生</string>
 
+    <!-- Strings related to fragment -->
+    <string name="frag_news">新聞</string>
+    <string name="frag_apply">申請</string>
+    <string name="frag_evaluation">評量</string>
+    <string name="frag_inquire">查詢</string>
+    <string name="frag_teach">教學</string>
+    <string name="frag_setup">設定</string>
 
 </resources>
 

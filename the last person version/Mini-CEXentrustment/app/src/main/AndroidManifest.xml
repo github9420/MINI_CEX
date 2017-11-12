@@ -39,7 +39,11 @@
         <activity
             android:name=".tw.RegisteredActivity"
             android:label="@string/action_registered" />
+        <activity
+            android:name=".tw.AfterLoginActivity"
+            android:label="新聞" />
         <activity android:name=".tw.SelectRoleActivity"></activity>
+
     </application>
 
 </manifest>

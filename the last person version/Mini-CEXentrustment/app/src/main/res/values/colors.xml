@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorBlack">#000000</color>
-    <color name="colorWrite">#FFFFFF</color>
+    <color name="colorWrite">#ffffff</color>
     <color name="colorWrite2">#F0F0F0</color>
 
     <!--reds-->
@@ -46,7 +46,7 @@
     <color name="md_blue_200">#90CAF9</color>
     <color name="md_blue_300">#64B5F6</color>
     <color name="md_blue_400">#42A5F5</color>
-    <color name="md_blue_500">#2196F3</color>
+    <color name="md_blue_500">#2196f3</color>
     <color name="md_blue_600">#1E88E5</color>
     <color name="md_blue_700">#1976D2</color>
     <color name="md_blue_800">#1565C0</color>

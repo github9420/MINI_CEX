@@ -70,50 +70,29 @@ public class ServerConnect {
             http.setUseCaches(false);
 
             http.setFixedLengthStreamingMode(bytes.length);
-            //Log.e("error", "1 ");
             //http.setRequestProperty("Host", GDefine.host);
-            //Log.e("error", "2 ");
             http.setRequestProperty("Content-Type", "application/json");
-            //Log.e("error", "3 ");
             http.setRequestProperty("charset", "UTF-8");
-            //Log.e("error", "4 ");
             http.setRequestProperty("Content-Length", Integer.toString(bytes.length));
-            //Log.e("error", "5 ");
-            // post the request
             OutputStream out = http.getOutputStream();
-            //Log.e("error", "6 ");
             OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
-            //Log.e("error", "7 ");
             BufferedWriter writer = new BufferedWriter(outWriter);
-            //Log.e("error", "8 ");
             writer.write(body.toString());
-            //Log.e("error", "9 ");
-//            writer.write(data.toString());
             writer.flush();
-            //Log.e("error", "10 ");
             byte[] str = writer.toString().getBytes();
-            //Log.e("error", "11 ");
             Log.d(TAG, new String(str, "UTF-8"));
-
-            //Log.e("error", "12 ");writer.close();
             out.close();
-            //Log.e("error", "13 ");
             http.connect();
-            //Log.e("error", "14 ");
             Log.d(TAG,http.toString());
-            //Log.e("error", "15 ");
             if(http != null) {
                 responseCode = String.valueOf(http.getResponseCode());
-                //Log.e("error", "16 ");
+                Log.e(TAG,responseCode);
                 if(Integer.valueOf(responseCode) == HttpURLConnection.HTTP_OK) {
                     // Correct password
                     //取得回傳的inputStream (輸入流串)
                     InputStream inputStream = http.getInputStream();
-                    //Log.e("error", "17 ");
                     responseCode = dispatchCommandType(changeInputStream(inputStream), qType, context);
-                    //Log.e("error", "18 ");
                 } else {
-                    Log.e("error", "19 ");
                     throw new IOException("Post failed with error code : " + responseCode);
 
                 }
@@ -154,13 +133,14 @@ public class ServerConnect {
     }
 
     public static String dispatchCommandType(String jsonData, CommandType type, Context context) throws JSONException {
+        Log.e(TAG,"aaaaa");
         String result  = "1";
         JSONObject jsonObject = new JSONObject(jsonData);
         switch(type)
         {
             case account_user_authentication:
                 if(jsonObject.get("result").equals("true")){
-
+                    Log.e(TAG,"dddd");
                     String token = jsonObject.get("token").toString();
                     String account = jsonObject.get("account").toString();
                     String userId = jsonObject.get("userId").toString();
@@ -173,18 +153,18 @@ public class ServerConnect {
 
 
 
-
+                    /*
                     mToken = token;
                     try {
                         // 再次進行登入
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("userId", userId);
-                        map.put("token", token);
-                        map.put("phoneId", phoneId);
+                        map.put("account", "upstairs0102@gmail.com");
+                        map.put("userPassword", "1234");
+                        map.put("phoneId", "");
                         result = post(GDefine.account_user_login, map, type, context);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }else{
                     result = "-1";
                 }

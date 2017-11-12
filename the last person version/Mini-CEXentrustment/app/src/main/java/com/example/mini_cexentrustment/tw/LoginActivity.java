@@ -165,7 +165,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         if (jsonData == "1") {
             //需改密碼
             Intent newAct = new Intent();
-            newAct.setClass(LoginActivity.this, ResetPassword.class);
+            Log.d(TAG, "FUCKFUKCFKUKKCF:LSKJDL:FKSJ:DJFK");
+            newAct.setClass(LoginActivity.this, AfterLoginActivity.class);
             startActivity(newAct);
         } else if (jsonData == "2") {
             //正常登入
@@ -244,7 +245,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         boolean cancel = false;
         View focusView = null;
 
-
+        /*
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             Log.d(TAG, "text isempty?" + TextUtils.isEmpty(password));
@@ -264,7 +265,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             focusView = mEmailView;
             cancel = true;
         }
-
+        */
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -280,19 +281,18 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             //mAuthTask.execute((Void) null);
 
              /*實作登入*/
+             /*
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String deviceId = telephonyManager.getDeviceId();
+            String deviceId = telephonyManager.getDeviceId();*/
             //String deviceId ="9774d56d682e549c";
 
             Log.i(TAG,"get into here");
-            Log.i(TAG,"phoneID="+deviceId);
             Map<String, String> map = new HashMap<String, String>();
-            map.put("account", email); //隨機8碼
-            map.put("userPassword",password);
-            map.put("phoneId", deviceId);
+            map.put("account", "upstairs0102@gmail.com"); //隨機8碼
+            map.put("userPassword","1234");
+            map.put("phoneId","test");
             Log.i(TAG,"userPassword:"+email);
             Log.i(TAG,"password:"+password);
-            Log.i(TAG,"phoneID:"+deviceId);    //HTC A9 ID:352636074136792
             NetTask netTask =  new NetTask();
             netTask.initJSONObject(map);
             netTask.setCommandType(CommandType.account_user_authentication);
