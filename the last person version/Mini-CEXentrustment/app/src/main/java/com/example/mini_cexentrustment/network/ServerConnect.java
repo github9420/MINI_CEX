@@ -219,19 +219,26 @@ public class ServerConnect {
                 }
                 break;
             case account_user_sign_up:
+                Log.i(TAG,"get into sign up");
+                Log.i(TAG,result);
                 if(jsonObject.get("result").equals("true")){
+                    String status = jsonObject.get("token").toString();
+                    Log.d(TAG,"status:"+status);
                     result = "1";
                 }else{
                     String status = jsonObject.get("status").toString(); //狀態	accountHasBeenUsed: 帳號已註冊: 帳號已註冊 groupAlreadyExist: 組織已註冊
+                    Log.e(TAG,status);
                     if(status.equals("accountHasBeenUsed")){
                         //帳號已註冊
+                        Log.e(TAG,"accountHasBeenUsed");
                         result = "-3";
 
                     }else if (status.equals("groupAlreadyExist")){
                         //組織已註冊
+                        Log.e(TAG,"groupAlreadyExist");
                         result = "-2";
                     }else{
-
+                        Log.e(TAG,"No idea");
                         result = "-1";
                     }
                 }

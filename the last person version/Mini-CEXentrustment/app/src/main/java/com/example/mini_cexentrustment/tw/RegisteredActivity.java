@@ -147,21 +147,32 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
 
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        String name = mNameView.getText().toString();
-        String unit = mUnitView.getText().toString();
-        String confimPassword = mConfimPasswordView.getText().toString();
-        String mobilePhone = mMobilePhoneView.getText().toString();
-        String phone = mPhoneView.getText().toString();
-        String phoneEX = mPhoneEXView.getText().toString();
+//        String email = mEmailView.getText().toString();
+//        String password = mPasswordView.getText().toString();
+//        String name = mNameView.getText().toString();
+//        String unit = mUnitView.getText().toString();
+//        String confimPassword = mConfimPasswordView.getText().toString();
+//        String mobilePhone = mMobilePhoneView.getText().toString();
+//        String phone = mPhoneView.getText().toString();
+//        String phoneEX = mPhoneEXView.getText().toString();
 
+        String email = mEmailView.getText().toString();
+        String userPassword = mPasswordView.getText().toString();
+        String userName = mNameView.getText().toString();
+        //String businessNo = mUnitView.getText().toString();
+        String businessNo="8978198";
+        String groupName=mUnitView.getText().toString();
+        //String groupName="紅星球";
+        String mobilePhone = mMobilePhoneView.getText().toString();
+        String confimPassword = mConfimPasswordView.getText().toString();
+        String phone = mPhoneView.getText().toString();
+        String phoneEx = mPhoneEXView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(userPassword) && !isPasswordValid(userPassword)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -174,8 +185,8 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
             cancel = true;
         }
 
-        if(!isPasswordMatchValid(password, confimPassword)){
-            Log.i(TAG,"password="+password);
+        if(!isPasswordMatchValid(userPassword, confimPassword)){
+            Log.i(TAG,"password="+userPassword);
             Log.i(TAG,"confirmpassword="+confimPassword);
             mConfimPasswordView.setError(getString(R.string.error_incorrect_password_match));
             focusView = mConfimPasswordView;
@@ -193,13 +204,13 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(userName)) {
             mNameView.setError(getString(R.string.error_field_required));
             focusView = mNameView;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(unit)) {
+        if (TextUtils.isEmpty(businessNo)) {
             mUnitView.setError(getString(R.string.error_field_required));
             focusView = mUnitView;
             cancel = true;
@@ -234,12 +245,22 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
 
             Map<String, String> map = new HashMap<String, String>();
             map.put("email", email);
-            map.put("userPassword", password);
-            map.put("userName", name);
-            map.put("groupName", unit);
+            map.put("userPassword", userPassword);
+            map.put("userName", userName);
+            map.put("businessNo", businessNo);
+            map.put("groupName", groupName);
             map.put("mobilePhone", mobilePhone);
             map.put("phone", phone);
-            map.put("phoneEx", phoneEX);
+            map.put("phoneEx", phoneEx);
+            Log.e(TAG,"email: "+ email);
+            Log.e(TAG,"userPassword: "+ userPassword);
+            Log.e(TAG,"businessNo: "+businessNo);
+            Log.e(TAG,"groupName: "+groupName);
+            Log.e(TAG,"mobilePhone: "+ mobilePhone);
+            Log.e(TAG,"phone: "+ phone);
+            Log.e(TAG,"phoneEx: "+ phoneEx);
+
+
             NetTask netTask =  new NetTask();
             netTask.initJSONObject(map);
             netTask.setCommandType(CommandType.account_user_sign_up);
@@ -296,7 +317,7 @@ public class RegisteredActivity extends BaseActivity implements OnThreadComplete
 
     private boolean isPhoneValid(String phone) {
         //TODO: Replace this with your own logic
-        return phone.length() > 9;
+        return phone.length() >= 8;
     }
 
     private boolean isPasswordMatchValid(String password, String confirmPassword) {
