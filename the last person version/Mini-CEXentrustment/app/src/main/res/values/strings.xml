@@ -56,6 +56,7 @@
     <string name="name">姓名</string>
 
     <string name="unit">公司/單位名稱</string>
+    <string name="businessNo">公司統編號碼</string>
     <string name="mobile_phone">手機號碼</string>
     <string name="phone">室內電話</string>
     <string name="phone_Ex">分機號碼</string>

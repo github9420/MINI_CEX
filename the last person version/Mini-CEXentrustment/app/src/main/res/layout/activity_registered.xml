@@ -85,6 +85,22 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/registered_text_businessNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/businessNo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
                     android:id="@+id/registered_text_mobilePhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -173,4 +189,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
