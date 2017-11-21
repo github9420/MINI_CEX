@@ -2,11 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWrite">
 
+   <!--
     <ListView
         android:id="@+id/listview_setup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="200dp" />
+    -->
+    <TextView
+        android:id="@+id/id_txt_profile"
+        android:textSize = "30sp"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:gravity="center_horizontal"
+        android:text="編輯個人資料" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#444444"
+        />
+    <TextView
+        android:id="@+id/id_txt_about"
+        android:textSize = "30sp"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:gravity="center_horizontal"
+        android:text="關於APP" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#444444"
+        />
+    <TextView
+        android:id="@+id/id_txt_logout"
+        android:textSize = "30sp"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:gravity="center_horizontal"
+        android:text="登出" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#444444"
+        />
 </LinearLayout>

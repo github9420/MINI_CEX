@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_evaluation">
+        <item>Below</item>
+        <item>Meet</item>
+        <item>Above</item>
+    </string-array>
+</resources>

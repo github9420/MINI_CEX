@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutContainer">
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frg_detail_subject"
+        android:textSize="19sp"
+        android:textColor="@color/colorBlack"
+        android:layout_toRightOf="@+id/heroImageView"
+        android:layout_toEndOf="@+id/heroImageView"
+        tools:text="subject"
+        android:textStyle="normal"
+        android:paddingStart="20dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="20dp"
+        android:gravity="left"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/frg_teacher_student"
+        android:textSize="15sp"
+        android:textColor="@color/colorBlack"
+
+        android:layout_below="@+id/frg_detail_subject"
+        tools:text="teacher and student"
+        android:textStyle="italic"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="50dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="50dp"
+        android:layout_gravity="left"
+        android:gravity="left"
+        android:layout_marginRight="20dp" />
+
+    <TextView
+        android:id="@+id/frg_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="50dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="50dp"
+        android:layout_below="@+id/frg_teacher_student"
+        android:text="評估日期" />
+
+    <TextView
+        android:id="@+id/frg_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/frg_detail_date"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="評估狀態" />
+</RelativeLayout>

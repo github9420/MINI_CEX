@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="perform">
+        <item>1. 只能觀察，不能動手執行</item>
+        <item>2. 可以再直接、主動的指導之下執行</item>
+        <item>3. 指導者在學員有需要時可迅速地提供指導</item>
+        <item>4. 指導者僅提供遠距離或事後的指導即可</item>
+        <item>5. 已可以對更資淺的學員提供指導</item>
+    </string-array>
+</resources>

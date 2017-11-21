@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWrite"
+    >
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="臨床看診 (Mini-CEX)"
+        android:textAlignment="center" />
+
+    <Spinner
+        android:id="@+id/apply_1_spin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/apply_1_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="送出" />
+</LinearLayout>

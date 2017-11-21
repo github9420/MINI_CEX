@@ -162,17 +162,21 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     @Override
     public void executeCompleteCallback(String jsonData) {
+        //Log.e(TAG,"jsonData="+jsonData);
         if (jsonData == "1") {
             //需改密碼
             Intent newAct = new Intent();
-            Log.d(TAG, "FUCKFUKCFKUKKCF:LSKJDL:FKSJ:DJFK");
-            newAct.setClass(LoginActivity.this, AfterLoginActivity.class);
+            //Log.d(TAG, "FUCKFUKCFKUKKCF:LSKJDL:FKSJ:DJFK");
+            newAct.setClass(LoginActivity.this, AfterLoginActivity_R.class);
+
             startActivity(newAct);
         } else if (jsonData == "2") {
             //正常登入
             Intent newAct = new Intent();
-            //newAct.setClass( LoginActivity.this, ResetPassword.class);
+            newAct.setClass( LoginActivity.this, ResetPassword.class);
             startActivity(newAct);
+        } else if (jsonData == "-1") {
+            Log.e(TAG,"JSONDATA解析錯誤");
         }
     }
 
@@ -298,6 +302,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             netTask.setCommandType(CommandType.account_user_authentication);
             netTask.setActiveContext(this);
             netTask.execute();
+
         }
     }
 

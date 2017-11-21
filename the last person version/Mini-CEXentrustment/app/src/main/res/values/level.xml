@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="level">
+        <item>1. 醫學生畢業時應能獨立處理</item>
+        <item>2. ＰＧＹ結訓時應能獨立處理</item>
+        <item>3. 住院醫師結訓時應能獨立處理</item>
+        <item>4. 專家挑戰情境</item>
+    </string-array>
+</resources>

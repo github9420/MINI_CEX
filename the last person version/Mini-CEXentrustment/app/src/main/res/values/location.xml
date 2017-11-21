@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="location">
+        <item>1. 門診</item>
+        <item>2. 急診</item>
+        <item>3. 病房</item>
+        <item>4. 加護病房</item>
+        <item>5. 其他</item>
+    </string-array>
+</resources>

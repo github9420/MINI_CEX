@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="請在本次臨床指導後摘要你對他/她的指導分項錄音幾句回饋"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/evaluation_update_3_audio_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="錄音按鈕" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="評語" />
+
+    <EditText
+        android:id="@+id/evaluation_update_3_comment_edit"
+        android:layout_width="match_parent"
+        android:layout_height="277dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/evaluation_update_3_send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="送出" />
+</LinearLayout>

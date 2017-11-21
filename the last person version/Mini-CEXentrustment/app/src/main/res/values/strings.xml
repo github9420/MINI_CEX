@@ -72,5 +72,22 @@
     <string name="frag_teach">教學</string>
     <string name="frag_setup">設定</string>
 
+    <!--Test strings-->
+    <string name="hero_message">Hero Message</string>
+    <string name="hero_name">Hero Name</string>
+
+
+
+    <!--Spinner-->
+
+        <string name="Mini">SpinnerDemo</string>
+        <string-array name="lunch">
+            <item>雞腿飯</item>
+            <item>魯肉飯</item>
+            <item>排骨飯</item>
+            <item>水餃</item>
+            <item>陽春麵</item>
+        </string-array>
+
 </resources>
 

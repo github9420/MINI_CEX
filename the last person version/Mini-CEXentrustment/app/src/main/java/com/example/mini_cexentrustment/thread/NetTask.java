@@ -24,19 +24,23 @@ import java.util.Map;
  * 執行緒控制驅動
  */
 public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
+    private final static String TAG = NetTask.class.getSimpleName();
     private Context mContext;
-    private Map<String, String> parameters = null;;
+    private Map<String, String> parameters = null;
+    ;
     private CommandType qType;
 
     @Override
     public void setActiveContext(Context context) {
         // TODO
+        Log.i("NetTask", "setActiveContext");
         this.mContext = context;
     }
 
     @Override
     public void setCommandType(CommandType type) {
         // TODO
+        Log.i("NetTask", "setCommandType");
         this.qType = type;
     }
 
@@ -51,21 +55,72 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
         String status = "-1";
         try {
             String url = dispatchUrl(this.qType);
-            if(qType == CommandType.account_user_authentication) {
+            if (qType == CommandType.account_user_authentication) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
-            }else if(qType == CommandType.account_modify_user_password){
+            } else if (qType == CommandType.account_modify_user_password) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
-            }else if(qType == CommandType.account_user_sign_up){
+            } else if (qType == CommandType.account_user_sign_up) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
-            }else if(qType == CommandType.account_send_setting_password_email){
+            } else if (qType == CommandType.account_send_setting_password_email) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_get_news) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_get_calculation_result) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.teacher_get_calculation_result) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_get_evaluation_record) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_get_result_list) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.teacher_get_result_list) {
+                Log.e(TAG, "doInBackground:" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_get_request_list) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else if (qType == CommandType.student_get_request_setting) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else if (qType == CommandType.teacher_request_list) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            }else if(qType == CommandType.student_get_evaluation_request_evaluation){
+                Log.i("NetTask","sdsdsdsd" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.teacher_request_record) {
+                Log.i("NetTask", "testtest" + url);
+                status = ServerConnect.post(url, parameters, qType, mContext);
+            } else if (qType == CommandType.student_modify_user_info) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else if (qType == CommandType.student_evaluation_fill_evaluation_info) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else if (qType == CommandType.teacher_modify_user_info) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else if (qType == CommandType.student_user_logout) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            }
+            else if (qType == CommandType.teacher_user_logout) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            } else {
+                Log.e(TAG, "doInBackground is wrong");
             }
 
-
-
         } catch (IOException e) {
+            Log.e(TAG, "doInBackground io is wrong");
             e.printStackTrace();
         } catch (JSONException e) {
+            Log.e(TAG, "doInBackground json is wrong");
             e.printStackTrace();
         }
         return status;
@@ -75,73 +130,77 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
     protected void onPostExecute(final String result) {
         // TODO
         super.onPostExecute(result);
-        Log.i("return answer =",result);
-        if(result=="-1") {
-            if(mContext instanceof LoginActivity){
+        Log.i("return answer =", result);
+        if (result == "-1") {
+            if (mContext instanceof LoginActivity) {
                 if (qType == CommandType.account_user_authentication) {
                     Notice.setHandler((LoginActivity) mContext);
                     Notice.popLoginErrorMessage(result);
-                }else {
+                } else {
                     Log.d("LoginActivity", "異常");
                 }
-            }else if(mContext instanceof ResetPassword){
+            } else if (mContext instanceof ResetPassword) {
                 if (qType == CommandType.account_modify_user_password) {
                     Notice.setHandler((ResetPassword) mContext);
                     Notice.popResetPasswordErrorMessage();
-                }else {
+                } else {
                     Log.d("ResetPassword", "異常");
                 }
-            }else if(mContext instanceof RegisteredActivity){
+            } else if (mContext instanceof RegisteredActivity) {
                 if (qType == CommandType.account_user_sign_up) {
                     Notice.setHandler((RegisteredActivity) mContext);
                     Notice.popRegisteredErrorMessage();
-                }else {
+                } else {
                     Log.d("RegisteredActivity", "異常");
                 }
-            }else if(mContext instanceof ForgetPasswordActivity){
+            } else if (mContext instanceof ForgetPasswordActivity) {
                 if (qType == CommandType.account_send_setting_password_email) {
                     Notice.setHandler((ForgetPasswordActivity) mContext);
                     Notice.popForgetPasswordErrorMessage();
-                }else {
+                } else {
                     Log.d("ForgetPasswordActivity", "異常");
                 }
+            } else {
+                Log.e(TAG, "onPostExecute error");
             }
-        }else {
-            if(mContext instanceof LoginActivity){
+        } else {
+            if (mContext instanceof LoginActivity) {
                 if (qType == CommandType.account_user_authentication) {
                     Notice.setHandler((LoginActivity) mContext);
                     Notice.popLoginSuccessMessage(result);
                 }
-            }else if(mContext instanceof ResetPassword){
+            } else if (mContext instanceof ResetPassword) {
                 if (qType == CommandType.account_modify_user_password) {
                     Notice.setHandler((ResetPassword) mContext);
                     Notice.popResetPasswordSuccessMessage(result);
                 }
 
-            }else if(mContext instanceof RegisteredActivity){
+            } else if (mContext instanceof RegisteredActivity) {
                 if (qType == CommandType.account_user_sign_up) {
                     Notice.setHandler((RegisteredActivity) mContext);
-                    if(result == "-2") {
+                    if (result == "-2") {
                         Notice.popRegisteredErrorMessageByGroupAlreadyExist();
-                    }else if(result == "-3") {
+                    } else if (result == "-3") {
                         Notice.popRegisteredErrorMessageByAccountHasBeenUsed();
-                    }else {
+                    } else {
                         Notice.popRegisteredSuccessMessage(result);
                     }
-                }else {
+                } else {
                     Log.d("ResetPassword", "異常");
                 }
-            }else if(mContext instanceof ForgetPasswordActivity){
+            } else if (mContext instanceof ForgetPasswordActivity) {
                 if (qType == CommandType.account_send_setting_password_email) {
                     Notice.setHandler((ForgetPasswordActivity) mContext);
-                    if(result == "-2") {
+                    if (result == "-2") {
                         Notice.popForgetPasswordErrorMessageByEmailDoesNotExist();
-                    }else {
+                    } else {
                         Notice.popForgetPasswordSuccessMessage(result);
                     }
-                }else {
+                } else {
                     Log.d("ForgetPasswordActivity", "異常");
                 }
+            } else {
+                Log.e(TAG, "onPostExecute success");
             }
         }
         parameters.clear();
@@ -150,8 +209,7 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
 
     private String dispatchUrl(CommandType type) {
         String url = null;
-        switch(type)
-        {
+        switch (type) {
             case account_user_authentication:
                 url = GDefine.account_user_authentication; // 先驗證
                 break;
@@ -159,7 +217,7 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
                 url = GDefine.account_user_sign_up;
                 break;
             case account_send_setting_password_email:
-               url = GDefine.account_send_setting_password_email;
+                url = GDefine.account_send_setting_password_email;
                 break;
             case account_modify_user_password:
                 url = GDefine.account_modify_user_password;
@@ -170,8 +228,57 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
             case account_get_user_info:
                 url = GDefine.account_get_user_info;
                 break;
+            case student_get_news:
+                Log.e(TAG, "dipatchURL");
+                url = GDefine.student_get_news;
+                break;
+            case student_get_calculation_result:
+                url = GDefine.student_get_calculation_result;
+                break;
+            case teacher_get_calculation_result:
+                url = GDefine.teacher_get_calculation_result;
+                break;
+            case student_get_result_list:
+                url = GDefine.student_get_result_list;
+                break;
+            case teacher_get_result_list:
+                url = GDefine.teacher_get_result_list;
+                break;
+            case teacher_request_record:
+                url = GDefine.teacher_request_record;
+                break;
+            case student_modify_user_info:
+                url = GDefine.student_modify_user_info;
+                break;
+            case student_get_evaluation_request_evaluation:
+                url = GDefine.student_get_evaluation_request_evaluation;
+                break;
+            case teacher_modify_user_info:
+                url = GDefine.teacher_modify_user_info;
+                break;
+            case student_get_request_list:
+                url = GDefine.student_get_evaluation_list;
+                break;
+            case student_get_request_setting:
+                url = GDefine.student_get_request_setting;
+                break;
+            case student_get_evaluation_record:
+                url = GDefine.student_get_evaluation_record;
+                break;
+            case teacher_request_list:
+                url = GDefine.teacher_request_list;
+                break;
+            case student_user_logout:
+                url = GDefine.student_user_logout;
+                break;
+            case student_evaluation_fill_evaluation_info:
+                url = GDefine.student_evaluation_fill_evaluation_info;
+                break;
+            case teacher_user_logout:
+                url = GDefine.teacher_user_logout;
+                break;
             default:
-                url ="";
+                url = "*****";
                 break;
         }
         return url;
@@ -180,6 +287,7 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
     @Override
     public void initJSONObject(Map<String, String> map) {
         // TODO
+        Log.i("NetTask", "initJSONObject");
         this.parameters = map;
     }
 }
