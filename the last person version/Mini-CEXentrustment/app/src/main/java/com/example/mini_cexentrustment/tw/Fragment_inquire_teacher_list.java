@@ -31,15 +31,15 @@ import java.util.regex.Pattern;
  * Created by rorensu on 2017/11/15.
  */
 
-public class Fragment_apply_update_3 extends Fragment implements View.OnClickListener{
+public class Fragment_inquire_teacher_list extends Fragment implements View.OnClickListener{
 
-    private static final String TAG = Fragment_apply_update_3.class.getSimpleName();
+    private static final String TAG = Fragment_inquire_teacher_list.class.getSimpleName();
     private static UserEvaluation UserEvaluation;
     private Button mbtn,back_btn;
     private TextView name_txt,time_txt,type_txt,number_txt,evaitem_txt,location_txt,patstate_txt;
     private TextView level_txt,perform_txt,interview_txt,body_txt,skill_txt,teach_txt,judment_txt,efficency_txt,comment_txt;
     public ListView listView;
-    private Button next_btn;
+    private Button edit_btn;
     private int item11 = 1,item12 = 1;
     private String docutmentNo;
     private ArrayAdapter<String> adapter;
@@ -47,13 +47,14 @@ public class Fragment_apply_update_3 extends Fragment implements View.OnClickLis
     View v;
     ListView lv;
     private int ss;
-
+    private String startDatetime="";
+    private String endDatetime="";
 
     private Button chagne;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_apply_3, container, false);
+        View view = inflater.inflate(R.layout.fragment_inquire_teacher_list, container, false);
         Log.d(TAG, "onCreateView");
         return view ;
     }
@@ -62,8 +63,10 @@ public class Fragment_apply_update_3 extends Fragment implements View.OnClickLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
-        back_btn = (Button) getView().findViewById(R.id.apply_4_back);
+        back_btn = (Button) getView().findViewById(R.id.inquire_teacher_list_back);
         back_btn.setOnClickListener(this);
+        edit_btn = (Button) getView().findViewById(R.id.inquire_teacher_list_edit);
+        edit_btn.setOnClickListener(this);
         Log.d(TAG, "sdsdsdsd");
         boolean b = false;
         Matcher m;
@@ -72,6 +75,8 @@ public class Fragment_apply_update_3 extends Fragment implements View.OnClickLis
 
         Bundle bundle = getArguments();
         if (bundle != null) {
+            startDatetime= bundle.getString("startDateTime");
+            endDatetime= bundle.getString("endDateTime");
             docutmentNo = bundle.getString("docutmentNo");
         }
         m = p.matcher((CharSequence) docutmentNo);
@@ -227,16 +232,33 @@ public class Fragment_apply_update_3 extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Log.d("TAG", "onClick");
-        //final Bundle bundle = new Bundle();
-        //bundle.putInt("item11", item11);
-        //bundle.putInt("item12", item12);
-        Fragment_apply_update fvu = new Fragment_apply_update();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction tx = fm.beginTransaction();
-        tx.replace(R.id.id_content, fvu,"test");
-        tx.addToBackStack(null);
-        //fvu.setArguments(bundle);
-        tx.commit();
+        switch (v.getId()) {
+            case R.id.inquire_teacher_list_back:
+                final Bundle bundle = new Bundle();
+                bundle.putString("startDatetime", startDatetime);
+                bundle.putString("endDatetime", endDatetime);
+                Fragment_inquire_detail fvu = new Fragment_inquire_detail();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.replace(R.id.id_content, fvu, "test");
+                fvu.setArguments(bundle);
+                tx.addToBackStack(null);
+                //fvu.setArguments(bundle);
+                tx.commit();
+                break;
+            case R.id.inquire_teacher_list_edit:
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("docutmentNo", docutmentNo);
+                Fragment_evaluation_update_1 fff = new Fragment_evaluation_update_1();
+                FragmentManager mm = getFragmentManager();
+                FragmentTransaction xx = mm.beginTransaction();
+                xx.replace(R.id.id_content, fff, "test");
+                xx.addToBackStack(null);
+                fff.setArguments(bundle1);
+                //fvu.setArguments(bundle);
+                xx.commit();
+                break;
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.mini_cexentrustment.tw;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +34,7 @@ import org.json.JSONException;
 public class Fragment_apply_update_2 extends Fragment implements View.OnClickListener{
 
     private static final String TAG = Fragment_apply_update_2.class.getSimpleName();
-    private Button save_btn;
+    private Button save_btn,back_btn;
     private int location_int = 1;
     private String location_s = "1";
     private EditText number_edit,runType_edit,otherLocation_edit,patstate_edit;
@@ -54,12 +56,13 @@ public class Fragment_apply_update_2 extends Fragment implements View.OnClickLis
         Log.d(TAG, "onActivityCreated");
         save_btn = (Button) getView().findViewById(R.id.apply_2_save_btn);
         save_btn.setOnClickListener(this);
+        back_btn = (Button) getView().findViewById(R.id.apply_2_back);
+        back_btn.setOnClickListener(this);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            documentNo = bundle.getString("item");
+            documentNo = bundle.getString("documentNo");
         }
-
         try {
             ss = GetNews();
         } catch (JSONException e) {
@@ -74,7 +77,7 @@ public class Fragment_apply_update_2 extends Fragment implements View.OnClickLis
         Date dt=new Date();
 //透過SimpleDateFormat的format方法將Date轉為字串
         String dts=sdf.format(dt);
-        nowtime_txt = (TextView) getView().findViewById(R.id.apply_2_nowtime) ;
+        nowtime_txt = (TextView) getView().findViewById(R.id.apply_2_nowtime_id) ;
         nowtime_txt.setText(dts);
         number_edit = (EditText) getView().findViewById(R.id.apply_2_number);
         runType_edit = (EditText) getView().findViewById(R.id.apply_2_type);
@@ -133,25 +136,43 @@ public class Fragment_apply_update_2 extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        Log.d("TAG", "onClick");
-        Log.i(TAG,patstate_edit.getText().toString());
-        Log.i(TAG,number_edit.getText().toString());
-        Log.i(TAG,runType_edit.getText().toString());
-        Log.i(TAG,otherLocation_edit.getText().toString());
+        switch (v.getId()) {
+            case R.id.apply_2_save_btn:
+                Log.d("TAG", "onClick");
+                Log.i(TAG, patstate_edit.getText().toString());
+                Log.i(TAG, number_edit.getText().toString());
+                Log.i(TAG, runType_edit.getText().toString());
+                Log.i(TAG, otherLocation_edit.getText().toString());
 
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("documentNo", documentNo); //userId
-        map.put("medicalNumber", number_edit.getText().toString()); //userId
-        map.put("division", runType_edit.getText().toString()); //userId
-        map.put("locationType", String.valueOf(location_int)); //userId
-        map.put("locationTypeOther", otherLocation_edit.getText().toString()); //userId
-        map.put("Diagnosis", patstate_edit.getText().toString()); //userId
-        NetTask netTask =  new NetTask();
-        netTask.initJSONObject(map);
-        netTask.setCommandType(CommandType.student_evaluation_fill_evaluation_info);
-        netTask.setActiveContext(getActivity());
-        netTask.execute();
-        Log.e(TAG,"asdf");
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("documentNo", documentNo); //userId
+                map.put("medicalNumber", number_edit.getText().toString()); //userId
+                map.put("division", runType_edit.getText().toString()); //userId
+                map.put("locationType", String.valueOf(location_int)); //userId
+                map.put("locationTypeOther", otherLocation_edit.getText().toString()); //userId
+                map.put("Diagnosis", patstate_edit.getText().toString()); //userId
+                NetTask netTask = new NetTask();
+                netTask.initJSONObject(map);
+                netTask.setCommandType(CommandType.student_evaluation_fill_evaluation_info);
+                netTask.setActiveContext(getActivity());
+                netTask.execute();
+                Log.e(TAG, "asdf");
+                Fragment_apply_update fvu = new Fragment_apply_update();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.replace(R.id.id_content, fvu, "test");
+                tx.addToBackStack(null);
+                tx.commit();
+                break;
+            case R.id.apply_2_back :
+                Fragment_apply_update fff = new Fragment_apply_update();
+                FragmentManager dd = getFragmentManager();
+                FragmentTransaction ss = dd.beginTransaction();
+                ss.replace(R.id.id_content, fff, "test");
+                ss.addToBackStack(null);
+                ss.commit();
+                break;
+        }
 
     }
 

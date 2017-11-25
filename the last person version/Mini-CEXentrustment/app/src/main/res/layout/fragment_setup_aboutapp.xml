@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/setup_aboutapp_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="關於APP"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize = "30sp"
+        android:text="Mini-CEX.entrustment APP" />
+
+    <ImageView
+        android:id="@+id/id_about_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:srcCompat="@android:drawable/btn_star" />
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/id_about_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize = "30sp"
+        android:text="【說明】" />
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/id_about_statement"
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize = "30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="【版權聲明】" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize = "30sp"
+        android:gravity="center_horizontal"
+        android:id="@+id/id_about_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="【聯絡方式】" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+</LinearLayout>

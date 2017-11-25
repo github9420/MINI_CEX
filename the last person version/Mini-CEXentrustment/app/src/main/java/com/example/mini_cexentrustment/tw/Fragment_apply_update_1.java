@@ -17,7 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.mini_cexentrustment.R;
+import com.example.mini_cexentrustment.dao.UserAccountDAO;
 import com.example.mini_cexentrustment.define.CommandType;
+import com.example.mini_cexentrustment.define.UserAccount;
 import com.example.mini_cexentrustment.define.UserEvaluation;
 import com.example.mini_cexentrustment.network.ServerConnect;
 import com.example.mini_cexentrustment.thread.NetTask;
@@ -46,12 +48,13 @@ public class Fragment_apply_update_1 extends Fragment implements View.OnClickLis
     public String[] item_docutmentNo = {null};
     public String[] teacherId_s = {null};
     private List<String> allCountries;
-    private Button next_btn;
+    private Button next_btn,back_btn;
     private int eva_teacher_i = 1;
     private ArrayAdapter<String> adapter;
     String regEx="[^0-9]";
     View v;
     ListView lv;
+    String userId="";
     private int ss;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
@@ -66,22 +69,26 @@ public class Fragment_apply_update_1 extends Fragment implements View.OnClickLis
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
         boolean b = false;
+
         next_btn = (Button) getView().findViewById(R.id.apply_1_send);
         next_btn.setOnClickListener(this);
-        Log.d(TAG, "testsetsdfdfsd");
+        back_btn = (Button) getView().findViewById(R.id.apply_1_back);
+        back_btn.setOnClickListener(this);
         String item = null;
 
+        UserAccountDAO db_data = new UserAccountDAO(getActivity());
+        List<UserAccount> items = db_data.getAll();
+        for (UserAccount i : items) {
+            userId = String.valueOf(i.getUserId()).toString();
+        }
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("studentUserId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01"); //userId
+        map.put("studentUserId", userId); //userId
         NetTask netTask =  new NetTask();
         netTask.initJSONObject(map);
         netTask.setCommandType(CommandType.student_get_request_setting);
         netTask.setActiveContext(getActivity());
         netTask.execute();
-
-
-
 
 
         try {
@@ -112,22 +119,17 @@ public class Fragment_apply_update_1 extends Fragment implements View.OnClickLis
 
         try {
 //將資料寫入JSONArray
-            Log.i(TAG,"eeeeeeeeeeeeeee:");
             JSONArray modFamilyJSONArray = new JSONArray(test.Test);
             item_docutmentNo = new String[modFamilyJSONArray.length()];
             teacherId_s = new String[modFamilyJSONArray.length()];
-            Log.i(TAG,"asdasdadads:");
             //取出陣列內所有物件
             for(int i = 0;i < modFamilyJSONArray.length(); i++){
                 //取出JSON物件
-                Log.i(TAG,"ddddddddd:");
                 JSONObject modFamily = modFamilyJSONArray.getJSONObject(i);
                 //取得物件內資料
                 String request_userId = modFamily.get("userId").toString(); // 學生新聞:內容
                 String request_userName = modFamily.get("userName").toString(); // 學生新聞:內容
-                Log.i(TAG,"ffffffff:");
                 item_docutmentNo[i] = request_userName;
-                Log.i(TAG,"dddddddddddddddddddddddddddd:");
                 teacherId_s[i] = request_userId;
                 Log.i(TAG,"request_documentSNo:"+request_userId);
                 Log.i(TAG,"request_GoupSNo:"+request_userName);
@@ -217,23 +219,33 @@ public class Fragment_apply_update_1 extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Log.d("TAG", "onClick");
+        switch (v.getId()) {
+            case R.id.apply_1_send:
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("fromStudentUserId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01"); //隨機8碼
+                map.put("teacherUserId", teacherId_s[eva_teacher_i - 1]);
+                NetTask netTask = new NetTask();
+                netTask.initJSONObject(map);
+                netTask.setCommandType(CommandType.student_get_evaluation_request_evaluation);
+                netTask.setActiveContext(getActivity());
+                netTask.execute();
 
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("fromStudentUserId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01"); //隨機8碼
-        map.put("teacherUserId",teacherId_s[eva_teacher_i-1]);
-        NetTask netTask =  new NetTask();
-        netTask.initJSONObject(map);
-        netTask.setCommandType(CommandType.student_get_evaluation_request_evaluation);
-        netTask.setActiveContext(getActivity());
-        netTask.execute();
-
-        Fragment_apply_update fvu = new Fragment_apply_update();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction tx = fm.beginTransaction();
-        tx.replace(R.id.id_content, fvu,"test");
-        tx.addToBackStack(null);
-        tx.commit();
-
+                Fragment_apply_update fvu = new Fragment_apply_update();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.replace(R.id.id_content, fvu, "test");
+                tx.addToBackStack(null);
+                tx.commit();
+                break;
+            case R.id.apply_1_back:
+                Fragment_apply_update fff = new Fragment_apply_update();
+                FragmentManager fd = getFragmentManager();
+                FragmentTransaction rr = fd.beginTransaction();
+                rr.replace(R.id.id_content, fff, "test");
+                rr.addToBackStack(null);
+                rr.commit();
+                break;
+        }
     }
 
 }

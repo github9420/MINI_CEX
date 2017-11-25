@@ -29,8 +29,10 @@ import android.app.Fragment;
         import org.json.JSONException;
         import org.json.JSONObject;
         import com.example.mini_cexentrustment.R;
-        import com.example.mini_cexentrustment.define.CommandType;
-        import com.example.mini_cexentrustment.thread.NetTask;
+import com.example.mini_cexentrustment.dao.UserAccountDAO;
+import com.example.mini_cexentrustment.define.CommandType;
+import com.example.mini_cexentrustment.define.UserAccount;
+import com.example.mini_cexentrustment.thread.NetTask;
         import com.example.mini_cexentrustment.network.ServerConnect;
         import android.widget.SimpleAdapter;
         import android.widget.AdapterView;
@@ -48,6 +50,10 @@ public class Fragment_News extends Fragment{
     private Button mbtn;
     private TextView txtV;
     public ListView listView;
+    private String[] documentNo;
+    String userId="";
+    String userType="";
+
     String regEx="[^0-9]";
     View v;
     ListView lv;
@@ -62,14 +68,30 @@ public class Fragment_News extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01"); //userId
-        NetTask netTask =  new NetTask();
-        netTask.initJSONObject(map);
-        netTask.setCommandType(CommandType.student_get_news);
-        netTask.setActiveContext(getActivity());
-        netTask.execute();
+        UserAccountDAO db_data = new UserAccountDAO(getActivity());
+        List<UserAccount> items = db_data.getAll();
+        for (UserAccount i : items) {
+            userType = String.valueOf(i.getLoginRole()).toString();
+            userId = String.valueOf(i.getUserId()).toString();
+        }
 
+        if(userType.equals("teacher")) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("userId", userId); //userId
+            NetTask netTask = new NetTask();
+            netTask.initJSONObject(map);
+            netTask.setCommandType(CommandType.teacher_get_news);
+            netTask.setActiveContext(getActivity());
+            netTask.execute();
+        }else if(userType.equals("student")){
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("userId", userId); //userId
+            NetTask netTask = new NetTask();
+            netTask.initJSONObject(map);
+            netTask.setCommandType(CommandType.student_get_news);
+            netTask.setActiveContext(getActivity());
+            netTask.execute();
+        }
 
         try {
             ss = GetNews();
@@ -97,7 +119,7 @@ public class Fragment_News extends Fragment{
         //JSONObject jsonObject = new JSONObject(jsonData);
         //JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-
+        documentNo = new String[jsonArray.length()]; // 利用new指令產生物件
         for (int i = 0; i < jsonArray.length(); i++) {
 
             //populate arraylist with json array data
@@ -106,6 +128,7 @@ public class Fragment_News extends Fragment{
             String news_content = jsonObject.get("content").toString(); // 學生新聞:內容
             String news_newsType = jsonObject.get("newsType").toString(); //學生新聞:訊息類別
             String news_documentSNo = jsonObject.get("documentSNo").toString(); //學生新聞:表單流水號
+            documentNo[i] = news_documentSNo;
             String news_dateTime = jsonObject.get("dateTime").toString(); //學生新聞:日期
             Log.i(TAG,"news_content:"+news_content);
             Log.i(TAG,"news_newsType:"+news_newsType);
@@ -125,15 +148,13 @@ public class Fragment_News extends Fragment{
         for(int i = 0; i < jsonArray.length(); i++){
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage", jsonArray.getJSONObject(i).get("content"));//Img
-            map.put("ItemTitle", jsonArray.getJSONObject(i).get("newsType"));//Title
+            //map.put("ItemTitle", jsonArray.getJSONObject(i).get("newsType"));//Title
+            map.put("ItemTitle", "");//Title
             m = p.matcher((CharSequence) jsonArray.getJSONObject(i).get("newsType"));
-            Log.i(TAG,"????");
-            if(Integer.parseInt(m.replaceAll("").trim()) == 10) {
-                Log.i(TAG, "fuck");
+            if(Integer.parseInt(m.replaceAll("").trim()) == 30) {
                 document_type[i] = true;
             }
             else {
-                Log.i(TAG, "suck");
                 document_type[i] = false;
             }
             map.put("ItemDate", jsonArray.getJSONObject(i).get("dateTime"));
@@ -153,16 +174,17 @@ public class Fragment_News extends Fragment{
             public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                     long arg3) {
                 // TODO Auto-generated method stub
-                if(document_type[arg2])
-                    Toast.makeText(getActivity(),"點選第 "+(arg2) +" 個 \n內容："+arg2, Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(getActivity(), "fuck", Toast.LENGTH_SHORT).show();
-                    Fragment_teach ftwo = new Fragment_teach();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction tx = fm.beginTransaction();
-                    tx.replace(R.id.id_content, ftwo,"test");
-                    tx.addToBackStack(null);
-                    tx.commit();
+                if(document_type[arg2]) {
+                    Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
+                    final Bundle bundle1 = new Bundle();
+                    bundle1.putString("docutmentNo", documentNo[arg2]);
+                    Fragment_evaluation_update_1 fs = new Fragment_evaluation_update_1();
+                    FragmentManager aa = getFragmentManager();
+                    FragmentTransaction ss = aa.beginTransaction();
+                    ss.replace(R.id.id_content, fs, "test");
+                    ss.addToBackStack(null);
+                    fs.setArguments(bundle1);
+                    ss.commit();
                 }
             }
         });

@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mini_cexentrustment.R;
+import com.example.mini_cexentrustment.dao.UserAccountDAO;
 import com.example.mini_cexentrustment.define.CommandType;
+import com.example.mini_cexentrustment.define.UserAccount;
 import com.example.mini_cexentrustment.network.ServerConnect;
 import com.example.mini_cexentrustment.thread.NetTask;
 
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +46,7 @@ public class Fragment_apply_update extends Fragment implements View.OnClickListe
     private TextView txtV;
     public ListView listView;
     private Button next_btn;
-
+    String userId="";
     private int item11 = 1,item12 = 1;
     private ArrayAdapter<String> adapter;
     String regEx="[^0-9]";
@@ -66,10 +69,14 @@ public class Fragment_apply_update extends Fragment implements View.OnClickListe
         next_btn = (Button) getView().findViewById(R.id.apply_btn);
         next_btn.setOnClickListener(this);
         String item = null;
-
+        UserAccountDAO db_data = new UserAccountDAO(getActivity());
+        List<UserAccount> items = db_data.getAll();
+        for (UserAccount i : items) {
+            userId = String.valueOf(i.getUserId()).toString();
+        }
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("studentUserId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01"); //userId
+        map.put("studentUserId", userId); //userId
         NetTask netTask =  new NetTask();
         netTask.initJSONObject(map);
         netTask.setCommandType(CommandType.student_get_request_list);
@@ -159,25 +166,36 @@ public class Fragment_apply_update extends Fragment implements View.OnClickListe
 
         SimpleAdapter listItemAdapter = new SimpleAdapter(getActivity(),listItem, //套入動態資訊
                 R.layout.list_item,//套用自訂的XML
-                new String[] {"evaluation_status","ItemTitle","ItemDate"}, //動態資訊取出順序
+                new String[] {"evaluation_status","status","ItemDate"}, //動態資訊取出順序
                 new int[] {R.id.news_content_id, R.id.news_newsType_id, R.id.news_dateTime_id}){
             @Override
             public View getView(int position, View convertView, ViewGroup parent)
             {
                 View itemView = super.getView(position, convertView, parent);
-                TextView text = (TextView) itemView.findViewById(R.id.news_content_id);
+                TextView text = (TextView) itemView.findViewById(R.id.news_newsType_id);
 
                 for(int i = 0; i < jsonArray.length(); i++) {
-                    if(item_status[position] == 10) {
-                        text.setTextColor(getResources().getColor(R.color.md_blue_300));
-                        item_status[position] = 10;
+                    if(item_status[position] == 60) {
+                        text.setTextColor(getResources().getColor(R.color.md_green_300));
+                        text.setText("已評量");
+                        item_status[position] = 60;
                     }else if(item_status[position] == 30) {
+                        text.setText("待評量");
+                        item_status[position] = 30;
                         text.setTextColor(getResources().getColor(R.color.md_red_400));
-                        item_status[position] = 60;
                     }
-                    else if(item_status[position] == 60) {
-                        text.setTextColor(getResources().getColor(R.color.md_green_400));
-                        item_status[position] = 60;
+                    else if(item_status[position] == 10) {
+                        text.setTextColor(getResources().getColor(R.color.md_blue_500));
+                        text.setText("未輸入");
+                        item_status[position] = 10;
+                    }else if(item_status[position] == 20) {
+                        text.setTextColor(getResources().getColor(R.color.md_black_100));
+                        text.setText("已取消");
+                        item_status[position] = 20;
+                    }else if(item_status[position] == 80) {
+                        text.setTextColor(getResources().getColor(R.color.md_black_100));
+                        text.setText("作廢");
+                        item_status[position] = 80;
                     }
                 }
                 return itemView;
@@ -194,8 +212,8 @@ public class Fragment_apply_update extends Fragment implements View.OnClickListe
                                     long arg3) {
                 // TODO Auto-generated method stub
                 if(item_status[arg2] == 10) {
-                    Fragment_apply_update_3 fvu = new Fragment_apply_update_3();
-                    bundle.putString("item", item_docutmentNo[arg2]);
+                    Fragment_apply_update_2 fvu = new Fragment_apply_update_2();
+                    bundle.putString("docutmentNo", item_docutmentNo[arg2]);
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction tx = fm.beginTransaction();
                     tx.replace(R.id.id_content, fvu,"test");
@@ -207,7 +225,7 @@ public class Fragment_apply_update extends Fragment implements View.OnClickListe
                 }
                 else if(item_status[arg2] == 30){
                     Fragment_apply_update_3 fvu = new Fragment_apply_update_3();
-                    bundle.putString("item", item_docutmentNo[arg2]);
+                    bundle.putString("docutmentNo", item_docutmentNo[arg2]);
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction tx = fm.beginTransaction();
                     tx.replace(R.id.id_content, fvu,"test");

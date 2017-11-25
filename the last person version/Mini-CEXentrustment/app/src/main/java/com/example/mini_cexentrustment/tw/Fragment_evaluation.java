@@ -151,21 +151,36 @@ public class Fragment_evaluation extends Fragment implements View.OnClickListene
 
         SimpleAdapter listItemAdapter = new SimpleAdapter(getActivity(),listItem, //套入動態資訊
                 R.layout.list_item,//套用自訂的XML
-                new String[] {"status","requestDateTime","groupName"}, //動態資訊取出順序
+                new String[] {"groupName","status","requestDateTime"}, //動態資訊取出順序
+
                 new int[] {R.id.news_content_id,R.id.news_newsType_id,R.id.news_dateTime_id}){
             @Override
             public View getView(int position, View convertView, ViewGroup parent)
             {
                 View itemView = super.getView(position, convertView, parent);
-                TextView text = (TextView) itemView.findViewById(R.id.news_content_id);
+                TextView text = (TextView) itemView.findViewById(R.id.news_newsType_id);
                 for(int i = 0; i < jsonArray.length(); i++) {
                     if(item_status[position] == 60) {
-                        text.setTextColor(getResources().getColor(R.color.md_blue_100));
+                        text.setTextColor(getResources().getColor(R.color.md_black_10));
+                        text.setText("已評量");
                         item_status[position] = 60;
+                    }else if(item_status[position] == 30) {
+                        text.setTextColor(getResources().getColor(R.color.md_red_400));
+                        text.setText("待評量");
+                        item_status[position] = 30;
                     }
                     else if(item_status[position] == 10) {
-                        text.setTextColor(getResources().getColor(R.color.md_red_400));
+                        text.setTextColor(getResources().getColor(R.color.md_blue_400));
+                        text.setText("未輸入");
                         item_status[position] = 10;
+                    }else if(item_status[position] == 20) {
+                        text.setTextColor(getResources().getColor(R.color.md_black_10));
+                        text.setText("已取消");
+                        item_status[position] = 20;
+                    }else if(item_status[position] == 80) {
+                        text.setTextColor(getResources().getColor(R.color.md_black_100));
+                        text.setText("作廢");
+                        item_status[position] = 80;
                     }
                 }
                 return itemView;
@@ -181,8 +196,8 @@ public class Fragment_evaluation extends Fragment implements View.OnClickListene
             public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                     long arg3) {
                 // TODO Auto-generated method stub
-                if(item_status[arg2] == 10) {
-                    bundle.putString("item", item_docutmentNo[arg2]);
+                if(item_status[arg2] == 30) {
+                    bundle.putString("docutmentNo", item_docutmentNo[arg2]);
                     Fragment_evaluation_update_1 fvu = new Fragment_evaluation_update_1();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction tx = fm.beginTransaction();
@@ -190,11 +205,8 @@ public class Fragment_evaluation extends Fragment implements View.OnClickListene
                     tx.addToBackStack(null);
                     fvu.setArguments(bundle);
                     tx.commit();
-
-                    Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
                 }
-                else if(item_status[arg2] == 60)
-                    Toast.makeText(getActivity(),"fuck", Toast.LENGTH_SHORT).show();
+
             }
         });
 

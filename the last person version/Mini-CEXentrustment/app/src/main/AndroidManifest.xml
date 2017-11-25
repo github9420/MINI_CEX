@@ -12,7 +12,9 @@
     <!-- Device ID (IMEI/MEID) 權限 -->
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+    <!--錄音-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"

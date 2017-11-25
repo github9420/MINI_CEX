@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/evaluation_update_1_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="新增評量(1/3)"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/evaluation_update_cancel_btn"
@@ -16,7 +41,8 @@
             android:layout_toEndOf="@+id/linearLayout2"
             android:layout_toRightOf="@+id/linearLayout2"
             android:background="@color/md_red_800"
-            android:text="取消" />
+            android:text="取消"
+            android:textColor="@color/colorWrite2" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -94,7 +120,7 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:text="依據學員這次看診表現，請判斷下次類似病人情境您對他/她的信賴程度"/>
+                android:text="依據學員這次看診表現，請判斷下次類似病人情境您對他/她的信賴程度" />
 
             <Spinner
                 android:id="@+id/evaluation_update_perform"
@@ -111,10 +137,14 @@
                     android:id="@+id/evaluation_update_next_btn"
                     android:layout_width="241dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_100"
+                    android:layout_marginRight="@dimen/dp_100"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_weight="1"
                     android:background="@color/md_blue_400"
                     android:elevation="0dp"
-                    android:text="下一步" />
+                    android:text="下一步"
+                    android:textColor="@color/colorWrite2" />
             </LinearLayout>
 
         </LinearLayout>

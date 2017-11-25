@@ -6,22 +6,50 @@
     android:background="@color/colorWrite"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/apply_1_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="申請評量"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:text="臨床看診 (Mini-CEX)"
         android:textAlignment="center" />
 
     <Spinner
         android:id="@+id/apply_1_spin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10" />
 
     <Button
         android:id="@+id/apply_1_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="送出" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/md_blue_400"
+        android:text="送  出"
+        android:textColor="@color/colorWrite2" />
 </LinearLayout>

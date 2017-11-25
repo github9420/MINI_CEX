@@ -38,9 +38,14 @@ public final class GDefine {
 	public final static String student_get_evaluation_record = url + "student/evaluation/get-evaluation-record";
 	public final static String student_evaluation_fill_evaluation_info = url + "student/evaluation/fill-evaluation-info";
 	public final static String student_get_evaluation_request_evaluation = url + "student/evaluation/request-evaluation";
+
+	public final static String teacher_transfer_wav_to_text_by_based64=url+"teacher/evaluation/transfer-wav-to-text-by-base64";
 	//Teacher
 	public final static String teacher_request_list = url + "teacher/evaluation/get-request-list";
 	public final static String teacher_request_record = url + "teacher/evaluation/get-request-record";
+	public final static String teacher_add_evaluation_record = url + "teacher/evaluation/add-evaluation-record";
+	public final static String teacher_get_news = url + "teacher/news/get-news";
+	public final static String teacher_evaluation_reject_request = url + "teacher/evaluation/reject-request";
 
 	/**
 	 * DB paramter

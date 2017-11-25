@@ -45,7 +45,7 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
     String string_startDateTime="";
     String string_endDateTime="";
     String selectedStatus="";
-
+    String sname="";
     final Bundle bundle = new Bundle();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +63,7 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
         studentName=(EditText) view.findViewById(R.id.id_edt_studentName);
         subject=(EditText) view.findViewById(R.id.id_edt_subject);
         eva_status=(Spinner) view.findViewById(R.id.id_spinner_evaStatus);
-        final String[] Status = {"0", "20", "40", "60","80","100"};
+        final String[] Status = {"未輸入","已取消","待評量","已評量","作廢"};
         ArrayAdapter<String> StatusList = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
                 Status);
@@ -81,7 +81,8 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
         Year = DateFix(sYear);
         Mon  = DateFix(sMon);
         Day  = DateFix(sDay);
-
+        string_startDateTime=Year+"-"+Mon+"-"+Day+" 00:00:00";
+        string_endDateTime=Year+"-"+Mon+"-"+Day+" 23:00:00";
         startDateTime.init(TodayDate.get(Calendar.YEAR),TodayDate.get(Calendar.MONTH),
                 TodayDate.get(Calendar.DAY_OF_MONTH),
                 //DatePicker年月日更改後，會觸發作以下的事情。
@@ -126,6 +127,19 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
         //attemptGetStatisc();
 
         selectedStatus=eva_status.getSelectedItem().toString();
+        if(selectedStatus.equals("未輸入")){
+            selectedStatus="10";
+        } else if (selectedStatus.equals("已取消")) {
+            selectedStatus="20";
+        }else if(selectedStatus.equals("待評量")){
+            selectedStatus="30";
+        }else if (selectedStatus.equals("已評量")){
+            selectedStatus="60";
+        }else if(selectedStatus.equals("作廢")){
+            selectedStatus="80";
+        }else{
+            selectedStatus="wrong";
+        }
 
         UserAccountDAO db_data=new UserAccountDAO(getActivity());
         List<UserAccount> items=db_data.getAll();
@@ -135,16 +149,15 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
 
         studentUserId=studentIDNum.getText().toString();
         subjectSNo=subject.getText().toString();
-        selectedStatus=eva_status.getSelectedItem().toString();
-        subjectSNo=subject.getText().toString();
+        sname=studentName.getText().toString();
 
-        bundle.putString("teacherUserId","4d61b315-8d59-400b-a329-727c64a72965");
+        bundle.putString("teacherUserId",teacherUserId);
         bundle.putString("teacherUserName","");
         bundle.putString("teacherUserOrgId","");
         bundle.putString("studentUserId",studentUserId);
-        bundle.putString("studentUserName","");
+        bundle.putString("studentUserName",sname);
         bundle.putString("studentUserOrgId","");
-        bundle.putString("division","");
+        bundle.putString("division",subjectSNo);
         bundle.putString("startDateTime",string_startDateTime);
         bundle.putString("endDateTime",string_endDateTime);
         bundle.putString("status",selectedStatus);
@@ -160,34 +173,6 @@ public class Fragment_inquire_condition_teacher extends Fragment implements View
         tx.commit();
     }
 
-    private void attemptGetStatisc() {
-        //StudentVersion
-
-
-
-
-
-        String startDateTime="";
-        String endDateTime="";
-        String selectedStatus=eva_status.getSelectedItem().toString();
-
-        //Log.e(TAG,selectedStatus);
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("teacherUserId", teacherUserId);
-        map.put("studentUserId", studentUserId);
-        map.put("subjectSNo", subjectSNo);
-        map.put("startDateTime",startDateTime);
-        map.put("endDateTime", endDateTime);
-        map.put("departmentName",subjectSNo);
-        map.put("status",selectedStatus);
-
-//        NetTask netTask =  new NetTask();
-//        netTask.initJSONObject(map);
-//        netTask.setCommandType(CommandType.teacher_get_calculation_result);
-//        netTask.setActiveContext(getActivity());
-//        netTask.execute();
-
-    }
     private static String DateFix(int c){
         if (c >= 10)
             return String.valueOf(c);

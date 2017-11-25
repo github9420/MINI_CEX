@@ -42,7 +42,8 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
     private Button mbtn;
     private TextView txtV;
     public ListView listView;
-    private Button next_btn;
+    private Button next_btn,cancel_btn,back_btn;
+    private String docutmentNo;
     private int item11 = 1,item12 = 1;
     private Spinner spinner;
     public boolean b = true,a = true,spin1 = false,spin2=false;
@@ -69,14 +70,18 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
         boolean b = false;
         next_btn = (Button) getView().findViewById(R.id.evaluation_update_next_btn);
         next_btn.setOnClickListener(this);
+        cancel_btn = (Button) getView().findViewById((R.id.evaluation_update_cancel_btn));
+        cancel_btn.setOnClickListener(this);
+        back_btn = (Button) getView().findViewById((R.id.evaluation_update_1_back));
+        back_btn.setOnClickListener(this);
         String item = null;
         Matcher m;
         Pattern p = Pattern.compile(regEx);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            item = bundle.getString("item");
+            docutmentNo = bundle.getString("docutmentNo");
         }
-        m = p.matcher((CharSequence) item);
+        m = p.matcher((CharSequence) docutmentNo);
         Map<String, String> map = new HashMap<String, String>();
         String documentId = (m.replaceAll("").trim());
         map.put("documentSNo", documentId); //userId
@@ -153,7 +158,7 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
         teacher_request_teacherUserId = jsonObject.get("teacherUserId").toString(); //學生新聞:日期
         // = jsonObject.get("teacherUserName").toString(); // 學生新聞:內容
         teacher_request_studentUserId = jsonObject.get("studentUserId").toString(); //學生新聞:訊息類別
-        //teacher_request_studentUserName = jsonObject.get("studentUserName").toString(); //學生新聞:表單流水號
+        teacher_request_studentUserName = jsonObject.get("studentUserName").toString(); //學生新聞:表單流水號
         teacher_request_teacherType = jsonObject.get("teacherType").toString(); //學生新聞:日期
         teacher_request_studentType = jsonObject.get("studentType").toString(); //學生新聞:日期
         teacher_request_medicalNumber = jsonObject.get("medicalNumber").toString(); //學生新聞:日期
@@ -180,7 +185,7 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
         Log.i(TAG, "teacher_request_teacherUserId:" + teacher_request_teacherUserId);
         //Log.i(TAG, "teacher_request_teacherUserName:" + teacher_request_teacherUserName);
         Log.i(TAG, "teacher_request_studentUserId:" + teacher_request_studentUserId);
-        //Log.i(TAG, "teacher_request_studentUserName:" + teacher_request_studentUserName);
+        Log.i(TAG, "teacher_request_studentUserName:" + teacher_request_studentUserName);
         Log.i(TAG, "teacher_request_teacherType:" + teacher_request_teacherType);
         Log.i(TAG, "teacher_request_studentType:" + teacher_request_studentType);
         Log.i(TAG, "teacher_request_medicalNumber:" + teacher_request_medicalNumber);
@@ -203,12 +208,25 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
         Log.i(TAG, "teacher_request_evaluateDateTime:" + teacher_request_evaluateDateTime);
         Log.i(TAG, "teacher_request_modifyDateTime:" + teacher_request_modifyDateTime);
 
-        evaluation_update_apply_student.setText("申請學生 : "+teacher_request_diagnosis);
+
+        evaluation_update_apply_student.setText("申請學生 : "+teacher_request_studentUserName);
         evaluation_update_apply_time.setText("申請時間 : " + teacher_request_requestDateTime);
         evaluation_update_run_type.setText("執行科別 : " + teacher_request_division);
         evaluation_update_number.setText("病歷號 : " + teacher_request_medicalNumber);
         evaluation_update_evaluation_item.setText("評估項目 : " + teacher_request_diagnosis);
-        evaluation_update_location.setText("執行地點 : "+teacher_request_locationType);
+        int teacher_request_locationType_i = Integer.valueOf(teacher_request_locationType);
+        if(teacher_request_locationType_i == 1){
+            evaluation_update_location.setText("執行地點 : 門診");
+        }else if(teacher_request_locationType_i == 2){
+            evaluation_update_location.setText("執行地點 : 急診");
+        }else if(teacher_request_locationType_i == 3) {
+            evaluation_update_location.setText("執行地點 : 病房");
+        }else if(teacher_request_locationType_i == 4) {
+            evaluation_update_location.setText("執行地點 : 加護病房");
+        }else{
+            evaluation_update_location.setText("執行地點 : 其他");
+        }
+        //evaluation_update_location.setText("執行地點 : "+teacher_request_locationType);
         evaluation_update_state.setText("病人狀況或診斷 : "+teacher_request_comment);
 
         ArrayAdapter<CharSequence> adapter_level =  ArrayAdapter.createFromResource(getActivity(), R.array.level, android.R.layout.simple_spinner_item);
@@ -283,16 +301,52 @@ public class Fragment_evaluation_update_1 extends Fragment implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        Log.d("TAG", "onClick");
-        final Bundle bundle = new Bundle();
-        bundle.putInt("item11", item11);
-        bundle.putInt("item12", item12);
-        Fragment_evaluation_update_2 fvu = new Fragment_evaluation_update_2();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction tx = fm.beginTransaction();
-        tx.replace(R.id.id_content, fvu,"test");
-        tx.addToBackStack(null);
-        fvu.setArguments(bundle);
-        tx.commit();
+        switch (v.getId()) {
+            case R.id.evaluation_update_next_btn:
+                Log.d("TAG", "onClick");
+                final Bundle bundle = new Bundle();
+                bundle.putString("docutmentNo", docutmentNo);
+                bundle.putInt("item11", item11);
+                bundle.putInt("item12", item12);
+                Fragment_evaluation_update_2 fvu = new Fragment_evaluation_update_2();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.replace(R.id.id_content, fvu, "test");
+                tx.addToBackStack(null);
+                fvu.setArguments(bundle);
+                tx.commit();
+                break;
+            case R.id.evaluation_update_cancel_btn:
+                Matcher m;
+                Pattern p = Pattern.compile(regEx);
+                m = p.matcher((CharSequence) docutmentNo);
+                String documentId = (m.replaceAll("").trim());
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("documentSNo", documentId); //userId
+                NetTask netTask =  new NetTask();
+                netTask.initJSONObject(map);
+                netTask.setCommandType(CommandType.teacher_evaluation_reject_request);
+                netTask.setActiveContext(getActivity());
+                netTask.execute();
+
+
+
+                Fragment_evaluation fvv = new Fragment_evaluation();
+                FragmentManager fs = getFragmentManager();
+                FragmentTransaction txx = fs.beginTransaction();
+                txx.replace(R.id.id_content, fvv,"test");
+                txx.addToBackStack(null);
+                txx.commit();
+                break;
+            case R.id.evaluation_update_1_back:
+                Fragment_evaluation fss = new Fragment_evaluation();
+                FragmentManager fa = getFragmentManager();
+                FragmentTransaction rww = fa.beginTransaction();
+                rww.replace(R.id.id_content, fss,"test");
+                rww.addToBackStack(null);
+                rww.commit();
+                break;
+
+        }
     }
 }

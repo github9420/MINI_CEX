@@ -40,7 +40,8 @@ import java.util.regex.Pattern;
 public class Fragment_evaluation_update_2 extends Fragment implements View.OnClickListener{
 
     private static final String TAG = Fragment_evaluation_update_2.class.getSimpleName();
-    private Button next_btn;
+    private Button next_btn,back_btn;
+    private String docutmentNo;
     private int item11,item12,item21=1,item22=1,item23=1,item24=1,item25=1,item26=1;
     private int item21_t,item22_t,item23_t,item24_t,item25_t,item26_t;
     private int ss;
@@ -59,10 +60,12 @@ public class Fragment_evaluation_update_2 extends Fragment implements View.OnCli
         boolean b = false;
         next_btn = (Button) getView().findViewById(R.id.evaluation_update_2_next_btn);
         next_btn.setOnClickListener(this);
-
+        back_btn = (Button) getView().findViewById(R.id.evaluation_update_2_back);
+        back_btn.setOnClickListener(this);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
+            docutmentNo = bundle.getString("docutmentNo");
             item11 = bundle.getInt("item11");
             item12 = bundle.getInt("item12");
         }
@@ -320,22 +323,38 @@ public class Fragment_evaluation_update_2 extends Fragment implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick");
-        final Bundle bundle = new Bundle();
-        bundle.putInt("item11", item11);
-        bundle.putInt("item12", item12);
-        bundle.putInt("item21", item21);
-        bundle.putInt("item22", item22);
-        bundle.putInt("item23", item23);
-        bundle.putInt("item24", item24);
-        bundle.putInt("item25", item25);
-        bundle.putInt("item26", item26);
-        Fragment_evaluation_update_3 fvu = new Fragment_evaluation_update_3();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction tx = fm.beginTransaction();
-        tx.replace(R.id.id_content, fvu,"test");
-        tx.addToBackStack(null);
-        fvu.setArguments(bundle);
-        tx.commit();
+        switch (v.getId()) {
+            case R.id.evaluation_update_2_next_btn:
+                Log.d(TAG, "onClick");
+                final Bundle bundle = new Bundle();
+                bundle.putString("docutmentNo", docutmentNo);
+                bundle.putInt("item11", item11);
+                bundle.putInt("item12", item12);
+                bundle.putInt("item21", item21);
+                bundle.putInt("item22", item22);
+                bundle.putInt("item23", item23);
+                bundle.putInt("item24", item24);
+                bundle.putInt("item25", item25);
+                bundle.putInt("item26", item26);
+                Fragment_evaluation_update_3 fvu = new Fragment_evaluation_update_3();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.replace(R.id.id_content, fvu, "test");
+                tx.addToBackStack(null);
+                fvu.setArguments(bundle);
+                tx.commit();
+                break;
+            case R.id.evaluation_update_2_back:
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("docutmentNo", docutmentNo);
+                Fragment_evaluation_update_1 fs = new Fragment_evaluation_update_1();
+                FragmentManager aa = getFragmentManager();
+                FragmentTransaction ss = aa.beginTransaction();
+                ss.replace(R.id.id_content, fs, "test");
+                ss.addToBackStack(null);
+                fs.setArguments(bundle1);
+                ss.commit();
+                break;
+        }
     }
 }

@@ -47,6 +47,8 @@ import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * A login screen that offers login via email/password.
@@ -193,6 +195,28 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
+        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED&&checkSelfPermission(RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        if (shouldShowRequestPermissionRationale(READ_CONTACTS)||shouldShowRequestPermissionRationale(RECORD_AUDIO)) {
+            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE,RECORD_AUDIO,WRITE_EXTERNAL_STORAGE}, REQUEST_READ_CONTACTS);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE,RECORD_AUDIO,WRITE_EXTERNAL_STORAGE}, REQUEST_READ_CONTACTS);
+        }
+        return false;
+    }
+    /*
+    private boolean mayRequestContacts() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
         if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
@@ -202,14 +226,15 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE}, REQUEST_READ_CONTACTS);
+                            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE,RECORD_AUDIO,WRITE_EXTERNAL_STORAGE}, REQUEST_READ_CONTACTS);
                         }
                     });
         } else {
-            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE}, REQUEST_READ_CONTACTS);
+            requestPermissions(new String[]{READ_CONTACTS,READ_PHONE_STATE,RECORD_AUDIO,WRITE_EXTERNAL_STORAGE}, REQUEST_READ_CONTACTS);
         }
         return false;
     }
+*/
 
     /**
      * Callback received when a permissions request has been completed.
@@ -249,7 +274,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         boolean cancel = false;
         View focusView = null;
 
-        /*
+
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             Log.d(TAG, "text isempty?" + TextUtils.isEmpty(password));
@@ -269,7 +294,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             focusView = mEmailView;
             cancel = true;
         }
-        */
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -292,8 +317,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
             Log.i(TAG,"get into here");
             Map<String, String> map = new HashMap<String, String>();
-            map.put("account", "upstairs0102@gmail.com"); //隨機8碼
-            map.put("userPassword","1234");
+            map.put("account", email); //隨機8碼
+            map.put("userPassword",password);
             map.put("phoneId","test");
             Log.i(TAG,"userPassword:"+email);
             Log.i(TAG,"password:"+password);

@@ -36,9 +36,10 @@ import java.util.Map;
  */
 
 public class Fragment_setup extends Fragment implements View.OnClickListener {
-    public static final String TAG = "SetupFragment";
+    private final static String TAG = Fragment_setup.class.getSimpleName();
     private ListView listview;
     private TextView txt_edit,txt_about,txt_logout;
+    private TextView txt_recording;
     private String[] str = {"編輯個人資料", "關於APP", "登出"};
     private String userType="";
     private String userId="";
@@ -53,7 +54,6 @@ public class Fragment_setup extends Fragment implements View.OnClickListener {
         txt_about.setOnClickListener(this);
         txt_edit.setOnClickListener(this);
         txt_logout.setOnClickListener(this);
-
 
 
 
@@ -111,7 +111,6 @@ public class Fragment_setup extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_txt_profile:
-                Log.e(TAG,"asdf");
                 Fragment_setup_editprofile fse = new Fragment_setup_editprofile();
 
                 FragmentManager fm = getFragmentManager();
@@ -123,12 +122,16 @@ public class Fragment_setup extends Fragment implements View.OnClickListener {
                 tx.commit();
                 break;
             case R.id.id_txt_about:
-//                UserAccountDAO db_data=new UserAccountDAO(getActivity());
-//                List<UserAccount> items=db_data.getAll();
-//                for(UserAccount i:items){
-//                    Log.e(TAG,"SQLuserTYPE"+String.valueOf(i.getLoginRole()).toString());
-//                    //userType=String.valueOf(i.getUserType()).toString();
-//                }
+                Fragment_setup_aboutapp fsa = new Fragment_setup_aboutapp();
+
+                FragmentManager fmsa = getFragmentManager();
+                FragmentTransaction txsa = fmsa.beginTransaction();
+
+                txsa.replace(R.id.id_content, fsa, "setuptoabout");
+                txsa.addToBackStack(null);
+                txsa.hide(this);
+                txsa.commit();
+
                 Toast.makeText(getActivity(),"關於app", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.id_txt_logout:
@@ -176,8 +179,6 @@ public class Fragment_setup extends Fragment implements View.OnClickListener {
 
                 ServerConnect.F_logout_flag=false;
                 ServerConnect.logout_imformation=false;
-
-
                 break;
         }
     }

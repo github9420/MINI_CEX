@@ -54,6 +54,10 @@ public class AfterLoginActivity_R extends BaseActivity implements View.OnClickLi
         for (UserAccount i : items) {
             userType = String.valueOf(i.getLoginRole()).toString();  //to check whether u r the teacher or student
         }
+        //userType="teacher";     //測試用
+
+
+
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_afterlogin_r);
         initViews();

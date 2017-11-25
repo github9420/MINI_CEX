@@ -15,7 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.mini_cexentrustment.R;
+import com.example.mini_cexentrustment.dao.UserAccountDAO;
 import com.example.mini_cexentrustment.define.CommandType;
+import com.example.mini_cexentrustment.define.UserAccount;
 import com.example.mini_cexentrustment.network.ServerConnect;
 import com.example.mini_cexentrustment.thread.NetTask;
 
@@ -36,48 +38,52 @@ public class Fragment_inquire_detail extends Fragment implements View.OnClickLis
     private final static String TAG = Fragment_inquire_detail.class.getSimpleName();
 
 
-    String startDatetime;
-    String endDatetime;
-
+    String startDatetime="";
+    String endDatetime="";
+    String selectedStatus="";
+    String teacherUserId="";
+    String studentUserId="";
+    String subjectSNo="";
+    String userType="";
     private Button btn_back;
 
     public ListView listView;
     public List<Item_detail> detail;
+    final Bundle bundle = new Bundle();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inquire_detail, container, false);
-        listView=(ListView)view.findViewById(R.id.id_listview_result);
+        listView = (ListView) view.findViewById(R.id.id_listview_result);
 
-       /* Bundle bundle=this.getArguments();
-        if (bundle != null) {
-            //startDatetime=bundle.getString("startDateTime");
-            //endDatetime=bundle.getString("endDateTime");
-            Log.e(TAG, startDatetime);
-        }else{
-            Log.e(TAG, "fuck ???");
-        }*/
+        Bundle bundleid = getArguments();
+        if (bundleid != null) {
+            startDatetime=bundleid.getString("startDateTime");
+            endDatetime=bundleid.getString("endDateTime");
 
-        detail =new ArrayList<Item_detail>();
-        //listView.setAdapter(new Frag_detail_adapter(this,detail));
-        Get_detail();
-        btn_back=(Button)view.findViewById(R.id.id_frg_detail_back);
-        btn_back.setOnClickListener(this);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            selectedStatus=bundleid.getString("status");
+            teacherUserId=bundleid.getString("teacherUserId");
+            studentUserId=bundleid.getString("studentUserId");
+            subjectSNo=bundleid.getString("subjectSNo");
 
-                Log.e(TAG,"i really want to fu ck ");
-                Toast toast = Toast.makeText(getActivity(),
-                        "尚未有新增評量功能!", Toast.LENGTH_LONG);
-                //顯示Toast
-                toast.show();
-                //新增評量
-                return false;
-            }
-        });
-        return view ;
+            bundle.putString("subjectSNo",subjectSNo);
+            Log.e(TAG, "thing");
+        } else {
+            Log.e(TAG, "test");
+        }
+        UserAccountDAO db_data = new UserAccountDAO(getActivity());
+        List<UserAccount> items = db_data.getAll();
+        for (UserAccount i : items) {
+            userType = String.valueOf(i.getLoginRole()).toString();
+        }
+
+            detail = new ArrayList<Item_detail>();
+            //listView.setAdapter(new Frag_detail_adapter(this,detail));
+            Get_detail();
+            btn_back = (Button) view.findViewById(R.id.id_frg_detail_back);
+            btn_back.setOnClickListener(this);
+
+        return  view;
     }
 
 
@@ -92,37 +98,39 @@ public class Fragment_inquire_detail extends Fragment implements View.OnClickLis
     private void Get_detail() {
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("teacherUserId","");
+        map.put("teacherUserId",teacherUserId);
         map.put("teacherUserName","");
         map.put("teacherUserOrgId","");
-        map.put("studentUserId","90b3a95a-b8cc-11e7-9eae-04012dec4e01");
+        map.put("studentUserId",studentUserId);
         map.put("studentUserName","");
         map.put("studentUserOrgId","");
-        map.put("divison","");
-        map.put("startDateTime","2017-01-01 00:00:00");
-        map.put("endDateTime", "2017-11-05 23:00:00");
-        map.put("status","60");
-        //map.put("divison",subjectSNo);
-        //map.put("startDateTime",string_startDateTime);
-        //map.put("endDateTime", string_endDateTime);
-        //map.put("status",selectedStatus);
+        map.put("divison",subjectSNo);
+        map.put("startDateTime",startDatetime);
+        map.put("endDateTime", endDatetime);
+//        map.put("startDateTime","2017-01-01 00:00:00");
+//        map.put("endDateTime", "2017-11-05 23:00:00");
+        map.put("status",selectedStatus);
+
         NetTask netTask =  new NetTask();
         netTask.initJSONObject(map);
         netTask.setCommandType(CommandType.student_get_result_list);
         netTask.setActiveContext(getActivity());
         netTask.execute();
+        Log.e(TAG,"before while");
         while(!ServerConnect.F_detail_flag){
 
         }
+        ServerConnect.F_detail_flag=false;
         GettheDetail(ServerConnect.detail_imformation);
     }
 
     private void GettheDetail(String jsonData) {
         Log.e(TAG,"getthedetail");
-
+        int jslength=0;
         try {
             JSONArray jsonArray = new JSONArray(jsonData);
-
+            // x is a reference to int[]
+            jslength=jsonArray.length(); // 利用new指令產生物件
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 detail.add(new Item_detail(jsonObject));
@@ -135,7 +143,95 @@ public class Fragment_inquire_detail extends Fragment implements View.OnClickLis
         Log.e(TAG,"student_get_result_list end");
         //txt_result_imformation.setText(ServerConnect.Statisc_imformation);
         //ServerConnect.Statisc_imformation="";
+         // x is a reference to int[]
+        final int[] item_status;
+        item_status = new int[jslength]; // 利用new指令產生物件
+        final String[] item_docutmentNo;
+        item_docutmentNo = new String[jslength];
+        int x=0;
+        for (Item_detail i : detail) {
+            item_status[x]=Integer.valueOf(i.getStatus().toString());
+            item_docutmentNo[x]=String.valueOf(i.getDocumentSNo());
+            Log.i(TAG,"GG:"+ String.valueOf(i.getevaluateDateTime()).toString());
+            Log.i(TAG,"GG:"+ String.valueOf(i.getevaluateDateTime()).toString());
+            x++;
+        }
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                    long arg3) {
+
+                if (userType.equals("student")) {
+
+                    if(item_status[arg2] == 10) {
+                        Fragment_apply_update_3 fvu = new Fragment_apply_update_3();
+                        bundle.putString("item", item_docutmentNo[arg2]);
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction tx = fm.beginTransaction();
+                        tx.replace(R.id.id_content, fvu,"test");
+                        tx.addToBackStack(null);
+                        fvu.setArguments(bundle);
+                        tx.commit();
+
+                        Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(item_status[arg2] == 60){
+                        Fragment_apply_update_3 fvu = new Fragment_apply_update_3();
+                        bundle.putString("docutmentNo", item_docutmentNo[arg2]);
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction tx = fm.beginTransaction();
+                        tx.replace(R.id.id_content, fvu,"test");
+                        tx.addToBackStack(null);
+                        fvu.setArguments(bundle);
+                        tx.commit();
+                        Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.e(TAG,"nothing");
+                    }
+
+
+                }else{
+                    if(item_status[arg2] == 10) {
+                        Fragment_apply_update_3 fvu = new Fragment_apply_update_3();
+                        bundle.putString("item", item_docutmentNo[arg2]);
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction tx = fm.beginTransaction();
+                        tx.replace(R.id.id_content, fvu,"test");
+                        tx.addToBackStack(null);
+                        fvu.setArguments(bundle);
+                        tx.commit();
+
+                        Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(item_status[arg2] == 60){
+                        Fragment_inquire_teacher_list fvu = new Fragment_inquire_teacher_list();
+                        bundle.putString("docutmentNo", item_docutmentNo[arg2]);
+                        bundle.putString("startDatetime", startDatetime);
+                        bundle.putString("endDatetime", endDatetime);
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction tx = fm.beginTransaction();
+                        tx.replace(R.id.id_content, fvu,"test");
+                        tx.addToBackStack(null);
+                        fvu.setArguments(bundle);
+                        tx.commit();
+                        Toast.makeText(getActivity(), "點選第 " + (arg2) + " 個 \n內容：" + arg2, Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.e(TAG,"nothing");
+                    }
+
+
+                }
+
+/*
+                Toast toast = Toast.makeText(getActivity(),
+                        "尚未有新增評量功能!", Toast.LENGTH_LONG);
+                //顯示Toast
+                toast.show();*/
+                //新增評量
+
+            }
+        });
 
         ServerConnect.F_detail_flag=false;
         ServerConnect.detail_imformation="";

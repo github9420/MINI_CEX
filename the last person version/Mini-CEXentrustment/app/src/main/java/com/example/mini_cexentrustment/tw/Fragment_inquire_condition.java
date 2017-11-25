@@ -17,11 +17,14 @@ import android.widget.Spinner;
 
 
 import com.example.mini_cexentrustment.R;
+import com.example.mini_cexentrustment.dao.UserAccountDAO;
 import com.example.mini_cexentrustment.define.CommandType;
+import com.example.mini_cexentrustment.define.UserAccount;
 import com.example.mini_cexentrustment.thread.NetTask;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,7 +64,7 @@ public class Fragment_inquire_condition extends Fragment implements View.OnClick
         teacherName=(EditText) view.findViewById(R.id.id_edt_teacherName);
         subject=(EditText) view.findViewById(R.id.id_edt_subject);
         eva_status=(Spinner) view.findViewById(R.id.id_spinner_evaStatus);
-        final String[] Status = {"0", "20", "40", "60","80","100"};
+        final String[] Status = {"未輸入","已取消","待評量","已評量","作廢"};
         ArrayAdapter<String> StatusList = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
                 Status);
@@ -80,7 +83,8 @@ public class Fragment_inquire_condition extends Fragment implements View.OnClick
         Year = DateFix(sYear);
         Mon  = DateFix(sMon);
         Day  = DateFix(sDay);
-
+        string_startDateTime=Year+"-"+Mon+"-"+Day+" 00:00:00";
+        string_endDateTime=Year+"-"+Mon+"-"+Day+" 23:00:00";
         startDateTime.init(TodayDate.get(Calendar.YEAR),TodayDate.get(Calendar.MONTH),
                 TodayDate.get(Calendar.DAY_OF_MONTH),
                 //DatePicker年月日更改後，會觸發作以下的事情。
@@ -127,18 +131,34 @@ public class Fragment_inquire_condition extends Fragment implements View.OnClick
     public void onClick(View v) {
         Log.e(TAG,"onclick");
         selectedStatus=eva_status.getSelectedItem().toString();
-        teacherUserId=teacherName.getText().toString();
-        studentUserId="";
-        subjectSNo=subject.getText().toString();
-        selectedStatus=eva_status.getSelectedItem().toString();
+        if(selectedStatus.equals("未輸入")){
+            selectedStatus="10";
+        } else if (selectedStatus.equals("已取消")) {
+            selectedStatus="20";
+        }else if(selectedStatus.equals("待評量")){
+            selectedStatus="30";
+        }else if (selectedStatus.equals("已評量")){
+            selectedStatus="60";
+        }else if(selectedStatus.equals("作廢")){
+            selectedStatus="80";
+        }else{
+            selectedStatus="wrong";
+        }
 
+        UserAccountDAO db_data = new UserAccountDAO(getActivity());
+        List<UserAccount> items = db_data.getAll();
+        for (UserAccount i : items) {
+            studentUserId = String.valueOf(i.getUserId()).toString();
+        }
+
+        subjectSNo=subject.getText().toString();
 
         bundle.putString("status",selectedStatus);
         bundle.putString("teacherUserId",teacherUserId);
         bundle.putString("studentUserId",studentUserId);
         bundle.putString("subjectSNo",subjectSNo);
         bundle.putString("endDateTime",string_endDateTime);
-
+        bundle.putString("startDateTime",string_startDateTime);
 
 //        Fragment_inquire_statisc fvu = new Fragment_inquire_statisc();
 //

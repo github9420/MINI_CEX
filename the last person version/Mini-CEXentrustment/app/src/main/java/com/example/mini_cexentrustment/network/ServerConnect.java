@@ -35,6 +35,7 @@ public class ServerConnect {
     private static String mToken = "";
     public static String Statisc_imformation="";
     public static String detail_imformation="";
+    public static String comment_imformation="";
     public static Boolean setting_imformation=false;
     public static Boolean logout_imformation=false;
     public static String Test = "";
@@ -42,6 +43,7 @@ public class ServerConnect {
     public static Boolean F_statisc_flag=false;
     public static Boolean F_detail_flag=false;
     public static Boolean F_setting_flag=false;
+    public static Boolean F_comment_flag=false;
     public static JSONArray jsonArray;
     public static Boolean fuck = false, fuck1 = false, fuck2 = false;
     public static Boolean student_get_request_list_b = false,student_get_request_setting_b = false,student_get_evaluation_record_b = false;
@@ -109,6 +111,7 @@ public class ServerConnect {
                     responseCode = dispatchCommandType(changeInputStream(inputStream), qType, context);
 
                 } else {
+                    Log.e(TAG,"http is null");
                     throw new IOException("Post failed with error code : " + responseCode);
 
                 }
@@ -118,13 +121,14 @@ public class ServerConnect {
 //            Map<String, List<String>> map = http.getHeaderFields();
         } catch (Exception e){
             e.printStackTrace();
+            Log.e(TAG,"catch http is null");
         } finally {
             if (http != null) {
                 Log.e(TAG,"disconnect");
                 http.disconnect();
             }
         }
-        Log.i(TAG,responseCode);
+        Log.i(TAG,"post"+responseCode);
         return responseCode;
     }
 
@@ -163,12 +167,15 @@ public class ServerConnect {
             Test = jsonData;
         } else if(type==CommandType.student_get_request_list||type==CommandType.teacher_request_list || type == CommandType.student_get_evaluation_record ||type == CommandType.teacher_request_record){
             Test = jsonData;
-        }else if(type ==CommandType.student_get_request_setting){
+        }else if(type ==CommandType.student_get_request_setting || type ==CommandType.teacher_get_news){
             Test = jsonData;
             jsonArray = new JSONArray(jsonData);
+        }else if(type==CommandType.student_get_result_list||type==CommandType.teacher_get_result_list){
+
         }
         else {
             jsonObject = new JSONObject(jsonData);
+            Log.e(TAG,"else="+type.toString());
         }
 
 
@@ -312,6 +319,29 @@ public class ServerConnect {
 
                 break;
             case student_get_news:
+                Log.e(TAG,"student_get_news");
+                jsonArray = new JSONArray(jsonData);
+                //JSONObject jsonObject = new JSONObject(jsonData);
+                //JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    //populate arraylist with json array data
+                    jsonObject = jsonArray.getJSONObject(i);
+                    Log.i(TAG,"get into student get news");
+                    String news_content = jsonObject.get("content").toString(); // 學生新聞:內容
+                    String news_newsType = jsonObject.get("newsType").toString(); //學生新聞:訊息類別
+                    String news_documentSNo = jsonObject.get("documentSNo").toString(); //學生新聞:表單流水號
+                    String news_dateTime = jsonObject.get("dateTime").toString(); //學生新聞:日期
+                    Log.i(TAG,"news_content:"+news_content);
+                    Log.i(TAG,"news_newsType:"+news_newsType);
+                    Log.i(TAG,"news_documentSNo:"+news_documentSNo);
+                    Log.i(TAG,"news_dataTime:"+news_dateTime);
+
+                }
+
+                fuck = true;
+                break;
+            case teacher_get_news:
                 Log.e(TAG,"student_get_news");
                 jsonArray = new JSONArray(jsonData);
                 //JSONObject jsonObject = new JSONObject(jsonData);
@@ -499,52 +529,88 @@ public class ServerConnect {
 
                 String name="";
                 Log.e(TAG,"student_get_calculation_result");
+
+                //String evaluationDatePeriod=null;
                  //jsonArray = new JSONArray(jsonData);
                 jsonObject = new JSONObject(jsonData);
                 String teacherName = jsonObject.get("teacherName").toString(); //
-                String evaluationDatePeriod = jsonObject.get("evaluationDatePeriod").toString(); //
+                String evaluationDatePeriod=jsonObject.get("evaluationDatePeriod").toString(); //
                 Log.i(TAG,"teacherName:"+teacherName);
                 Log.i(TAG,"evaluationDatePeriod:"+evaluationDatePeriod);
-                JSONArray jsonArrayS = new JSONArray(jsonObject.getString("calculationResult"));
+               /* if(evaluationDatePeriod==null&&evaluationDatePeriod.equals("")){
+                    Log.e(TAG,"fuck?1234" );
+                    Statisc_imformation="No data.";
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
+                }else{
+                    Log.e(TAG,"444" );
+                    JSONArray jsonArrayS = new JSONArray(jsonObject.getString("calculationResult"));
+                    for (int i = 0; i < jsonArrayS.length(); i++) {
+                        JSONObject object = (JSONObject) jsonArrayS.get(i);
+                        int id = object.getInt("value");
+                        name = object.getString("itemName");
+                        Statisc_imformation=Statisc_imformation+name+" "+Integer.toString(id)+"\n";
 
+                        Log.e(TAG,name+id);
+                    }
+                    Log.e(TAG,"student_get_calculation_result end");
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
+                }*/
+                if( !evaluationDatePeriod.equals("null")){
+                    JSONArray jsonArrayS = new JSONArray(jsonObject.getString("calculationResult"));
+                    for (int i = 0; i < jsonArrayS.length(); i++) {
+                        JSONObject object = (JSONObject) jsonArrayS.get(i);
+                        int id = object.getInt("value");
+                        name = object.getString("itemName");
+                        Statisc_imformation=Statisc_imformation+name+" "+Integer.toString(id)+"\n";
 
-                for (int i = 0; i < jsonArrayS.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArrayS.get(i);
-                    int id = object.getInt("value");
-                    name = object.getString("itemName");
-                    Statisc_imformation=Statisc_imformation+name+" "+Integer.toString(id)+"\n";
-
-                    Log.e(TAG,name+id);
+                        Log.e(TAG,name+id);
+                    }
+                    Log.e(TAG,"student_get_calculation_result end");
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
+                }else{
+                    Statisc_imformation="No data.";
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
                 }
-                Log.e(TAG,"student_get_calculation_result end");
-                result= Statisc_imformation;
-                F_statisc_flag=true;
-                break;
+
                 //Rorensu
             case teacher_get_calculation_result:
                 String nameT="";
                 Log.e(TAG,"teacher_get_calculation_result");
-                //jsonArray = new JSONArray(jsonData);
                 jsonObject = new JSONObject(jsonData);
                 String teacherNameT = jsonObject.get("teacherName").toString(); //
                 String evaluationDatePeriodT = jsonObject.get("evaluationDatePeriod").toString(); //
                 Log.i(TAG,"teacherName:"+teacherNameT);
                 Log.i(TAG,"evaluationDatePeriod:"+evaluationDatePeriodT);
-                JSONArray jsonArrayT = new JSONArray(jsonObject.getString("calculationResult"));
+                if( !evaluationDatePeriodT.equals("null")){
+                    JSONArray jsonArrayT = new JSONArray(jsonObject.getString("calculationResult"));
 
+                    for (int i = 0; i < jsonArrayT.length(); i++) {
+                        JSONObject object = (JSONObject) jsonArrayT.get(i);
+                        int id = object.getInt("value");
+                        nameT = object.getString("itemName");
+                        Statisc_imformation=Statisc_imformation+nameT+" "+Integer.toString(id)+"\n";
 
-                for (int i = 0; i < jsonArrayT.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArrayT.get(i);
-                    int id = object.getInt("value");
-                    nameT = object.getString("itemName");
-                    Statisc_imformation=Statisc_imformation+nameT+" "+Integer.toString(id)+"\n";
-
-                    Log.e(TAG,nameT+id);
+                        Log.e(TAG,nameT+id);
+                    }
+                    Log.e(TAG,"teacher_get_calculation_result end");
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
+                }else{
+                    Statisc_imformation="No data.";
+                    result= Statisc_imformation;
+                    F_statisc_flag=true;
+                    break;
                 }
-                Log.e(TAG,"teacher_get_calculation_result end");
-                result= Statisc_imformation;
-                F_statisc_flag=true;
-                break;
+
             case student_get_result_list:
                 Log.e(TAG,"student_get_result_list");
                 detail_imformation=jsonData;
@@ -566,6 +632,24 @@ public class ServerConnect {
                 break;
             case student_evaluation_fill_evaluation_info:
                 Log.e(TAG,"student_evaluation_fill_evaluation_info");
+                if(jsonObject.get("result").equals("true")){
+                    String status = jsonObject.get("status").toString(); //狀態	emailDoesNotExist: 信箱不存在
+                    Log.e(TAG,status);
+                }else{
+                    result = "1";
+                }
+                break;
+            case teacher_evaluation_reject_request:
+                Log.e(TAG,"teacher_evaluation_reject_request");
+                if(jsonObject.get("result").equals("true")){
+                    String status = jsonObject.get("status").toString(); //狀態	emailDoesNotExist: 信箱不存在
+                    Log.e(TAG,status);
+                }else{
+                    result = "1";
+                }
+                break;
+            case teacher_add_evaluation_record:
+                Log.e(TAG,"teacher_add_evaluation_record");
                 if(jsonObject.get("result").equals("true")){
                     String status = jsonObject.get("status").toString(); //狀態	emailDoesNotExist: 信箱不存在
                     Log.e(TAG,status);
@@ -615,6 +699,16 @@ public class ServerConnect {
                 }
                 F_logout_flag=true;
                 break;
+            case transfer_wav_to_text_by_based64:
+                Log.e(TAG,"transfer_wav_to_text_by_based64");
+                //detail_imformation=jsonData;
+
+                String text = jsonObject.get("text").toString();
+                Log.e(TAG,"text="+text);
+                comment_imformation=text;
+                F_comment_flag=true;
+                break;
+
             default:
 
                 break;

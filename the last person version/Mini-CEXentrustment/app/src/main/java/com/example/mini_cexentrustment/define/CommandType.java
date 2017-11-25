@@ -14,6 +14,7 @@ public enum CommandType {
 
 
     student_get_news,                      //學生取得新聞
+    teacher_get_news,                      //學生取得新聞
     student_get_calculation_result,         //學生查詢統計結果
     teacher_get_calculation_result,          //老師查詢統計結果
     student_get_result_list,                //學生查詢明細清單
@@ -28,5 +29,8 @@ public enum CommandType {
     student_evaluation_fill_evaluation_info,
     student_get_evaluation_record,
     student_user_logout,
-    teacher_user_logout
+    teacher_user_logout,
+    transfer_wav_to_text_by_based64,
+    teacher_add_evaluation_record,
+    teacher_evaluation_reject_request
 }

@@ -32,7 +32,7 @@ public class ResetPassword extends BaseActivity implements OnThreadComplete {
     private EditText mConfirmPasswordView;
     private View mProgressView;
     private View mForgetPasswordFormView;
-    private Button btn_submit;
+    private Button btn_submit,back_btn;
     private static UserAccountDAO mUserAccountDAO;
 
     @Override
@@ -57,6 +57,8 @@ public class ResetPassword extends BaseActivity implements OnThreadComplete {
         btn_submit = (Button)findViewById(R.id.btn_submit);
         btn_submit.setText(R.string.submit);
         btn_submit.setOnClickListener(click_btn_submit);
+        back_btn = (Button)findViewById(R.id.reset_password_back);
+        back_btn.setOnClickListener(click_back);
     }
 
     /**
@@ -71,6 +73,16 @@ public class ResetPassword extends BaseActivity implements OnThreadComplete {
             attemptForget_Password();
         }
     };
+    private View.OnClickListener click_back = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            //變更密碼
+            Intent newAct = new Intent();
+            newAct.setClass( ResetPassword.this, LoginActivity.class);
+            startActivity(newAct);
+        }
+    };
+
 
     @Override
     public void executeCompleteCallback(String jsonData) {

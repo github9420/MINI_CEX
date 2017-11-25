@@ -61,14 +61,14 @@ public class Fragment_inquire extends Fragment implements View.OnClickListener {
         btn_detail = (Button) view.findViewById(R.id.btn_details);
 
         btn_condition.setEnabled(false);
-        btn_statisc.setEnabled(false);
-        btn_detail.setEnabled(false);
+        btn_statisc.setEnabled(true);
+        btn_detail.setEnabled(true);
 
         btn_condition.setOnClickListener(this);
         btn_statisc.setOnClickListener(this);
         btn_detail.setOnClickListener(this);
         fragmentManager = getFragmentManager();
-        if (userType.equals("Student")) {
+        if (userType.equals("student")) {
             setTabSelection_S(0);
             Log.e(TAG, "student");
         } else {

@@ -5,6 +5,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/evaluation_update_2_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="新增評量(2/3)"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal">
 
@@ -171,6 +195,9 @@
         android:id="@+id/evaluation_update_2_next_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginLeft="@dimen/dp_100"
+        android:layout_marginRight="@dimen/dp_100"
+        android:background="@color/md_blue_400"
+        android:text="下一步" />
 
 </LinearLayout>

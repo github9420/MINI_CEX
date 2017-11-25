@@ -108,12 +108,25 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
             } else if (qType == CommandType.student_user_logout) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
                 Log.e(TAG, "doInBackground:" + url);
+            }else if (qType == CommandType.teacher_get_news) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            }else if (qType == CommandType.teacher_evaluation_reject_request) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
             }
             else if (qType == CommandType.teacher_user_logout) {
                 status = ServerConnect.post(url, parameters, qType, mContext);
                 Log.e(TAG, "doInBackground:" + url);
-            } else {
-                Log.e(TAG, "doInBackground is wrong");
+            }else if(qType == CommandType.teacher_add_evaluation_record){
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            }
+            else if (qType == CommandType.transfer_wav_to_text_by_based64) {
+                status = ServerConnect.post(url, parameters, qType, mContext);
+                Log.e(TAG, "doInBackground:" + url);
+            }else {
+                Log.e(TAG, "doInBackground is wrong"+this.qType);
             }
 
         } catch (IOException e) {
@@ -274,8 +287,22 @@ public class NetTask extends AsyncTask<Void, Void, String> implements IParam {
             case student_evaluation_fill_evaluation_info:
                 url = GDefine.student_evaluation_fill_evaluation_info;
                 break;
+            case teacher_add_evaluation_record:
+                url = GDefine.teacher_add_evaluation_record;
+                break;
+            case teacher_get_news:
+                url = GDefine.teacher_get_news;
+                break;
             case teacher_user_logout:
                 url = GDefine.teacher_user_logout;
+                break;
+            case transfer_wav_to_text_by_based64:
+                url=GDefine.teacher_transfer_wav_to_text_by_based64;
+                Log.e(TAG,"case :"+url);
+                break;
+            case teacher_evaluation_reject_request:
+                url=GDefine.teacher_evaluation_reject_request;
+                Log.e(TAG,"case :"+url);
                 break;
             default:
                 url = "*****";

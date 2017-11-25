@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class Fragment_inquire_statisc extends Fragment implements View.OnClickListener {
     private final static String TAG = Fragment_inquire_statisc.class.getSimpleName();
-
     String teacherUserId = "";
     String studentUserId = "";
     String subjectSNo = "";
@@ -60,20 +59,20 @@ public class Fragment_inquire_statisc extends Fragment implements View.OnClickLi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Get_calculation_result();
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             teacherUserId = bundle.getString("teacherUserId");
             studentUserId = bundle.getString("studentUserId");
             subjectSNo = bundle.getString("subjectSNo");
-            string_startDateTime = bundle.getString("string_startDateTime");
-            string_endDateTime = bundle.getString("string_endDateTime");
+            string_startDateTime = bundle.getString("startDateTime");
+            string_endDateTime = bundle.getString("endDateTime");
             selectedStatus = bundle.getString("status");
 
         } else {
-            Log.e(TAG, "fuck ???");
+            Log.e(TAG, "test1");
         }
-
+        Get_calculation_result();
     }
 
 
@@ -84,19 +83,22 @@ public class Fragment_inquire_statisc extends Fragment implements View.OnClickLi
             userType = String.valueOf(i.getLoginRole()).toString();
         }
 
+
         if (userType.equals("student")) {
             Log.e(TAG,"role student");
             Map<String, String> map = new HashMap<String, String>();
-            map.put("teacherUserId", "");
+            map.put("teacherUserId", teacherUserId);
             map.put("teacherUserName", "");
             map.put("teacherUserOrgId", "");
-            map.put("studentUserId", "90b3a95a-b8cc-11e7-9eae-04012dec4e01");
+            map.put("studentUserId", studentUserId);
             map.put("studentUserName", "");
             map.put("studentUserOrgId", "");
-            map.put("divison", "");
-            map.put("startDateTime", "2017-01-01 00:00:00");
-            map.put("endDateTime", "2017-11-05 23:00:00");
-            map.put("status", "60");
+            map.put("divison", subjectSNo);
+            map.put("startDateTime", string_startDateTime);
+            map.put("endDateTime", string_endDateTime);
+//            map.put("startDateTime", "2017-01-01 00:00:00");
+//            map.put("endDateTime", "2017-11-05 23:00:00");
+            map.put("status", selectedStatus);
             //map.put("divison",subjectSNo);
             //map.put("startDateTime",string_startDateTime);
             //map.put("endDateTime", string_endDateTime);
@@ -113,16 +115,16 @@ public class Fragment_inquire_statisc extends Fragment implements View.OnClickLi
         } else if (userType.equals("teacher")) {
             Log.e(TAG,"role teacher");
             Map<String, String> map = new HashMap<String, String>();
-            map.put("teacherUserId", "4d61b315-8d59-400b-a329-727c64a72965");
+            map.put("teacherUserId", teacherUserId);
             map.put("teacherUserName", "");
             map.put("teacherUserOrgId", "");
             map.put("studentUserId", "");
             map.put("studentUserName", "");
             map.put("studentUserOrgId", "");
             map.put("divison", "");
-            map.put("startDateTime", "2017-01-01 00:00:00");
-            map.put("endDateTime", "2017-11-05 23:00:00");
-            map.put("status", "60");
+            map.put("startDateTime",string_startDateTime );
+            map.put("endDateTime", string_endDateTime);
+            map.put("status", selectedStatus);
 
             NetTask netTask = new NetTask();
             netTask.initJSONObject(map);
@@ -135,11 +137,10 @@ public class Fragment_inquire_statisc extends Fragment implements View.OnClickLi
             GettheData();
         } else {
             Log.e(TAG,"role nothing");
-        }
+        };
 
     }
     private void GettheData() {
-        Log.e(TAG, "getthedata???");
         Log.e(TAG, ServerConnect.Statisc_imformation);
         txt_result_imformation.setText(ServerConnect.Statisc_imformation);
         ServerConnect.Statisc_imformation = "";

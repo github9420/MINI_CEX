@@ -3,6 +3,30 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/setup_editprofile_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="編輯個人資料"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/id_setup_name"
         android:layout_width="match_parent"
@@ -90,21 +114,17 @@
         android:layout_alignParentBottom="true"
         >
 
-        <Button
-            android:id="@+id/id_btn_setup_profile_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:text="返回" />
 
         <Button
             android:id="@+id/id_btn_setup_profile_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_100"
+            android:layout_marginRight="@dimen/dp_100"
             android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:text="確定" />
+            android:background="@color/md_blue_400"
+            android:text="存  檔"
+            android:textColor="@color/colorWrite2" />
     </LinearLayout>
 
 

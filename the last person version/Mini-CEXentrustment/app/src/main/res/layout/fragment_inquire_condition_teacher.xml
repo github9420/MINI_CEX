@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <GridLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="30">
-    </GridLayout>
+        android:layout_weight="30"
+        android:orientation="horizontal">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="30"></GridLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -149,6 +156,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
-        android:text="下一步->查詢" />
+        android:background="@color/md_blue_400"
+        android:text="下一步->查詢"
+        android:textColor="@color/colorWrite2" />
 
 </LinearLayout>

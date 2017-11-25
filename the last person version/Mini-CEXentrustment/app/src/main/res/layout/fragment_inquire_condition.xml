@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical">
-
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -130,8 +129,12 @@
         android:id="@+id/id_btn_next_inquire_S"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_100"
+        android:layout_marginRight="@dimen/dp_100"
         android:layout_weight="0.2"
-        android:text="下一步->查詢" />
+        android:background="@color/md_blue_400"
+        android:text="下一步->查詢"
+        android:textColor="@color/colorWrite2" />
 
 
 </LinearLayout>

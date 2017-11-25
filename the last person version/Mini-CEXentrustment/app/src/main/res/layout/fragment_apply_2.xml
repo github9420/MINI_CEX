@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/apply_2_nowtime"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWrite"
-    >
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/md_black_900"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/apply_2_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.5"
+            android:text="填寫評量資訊"
+            android:textColor="@color/colorWrite2"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +43,10 @@
             android:text="請填寫醫療資訊" />
 
         <TextView
-            android:id="@+id/apply_2_nowtime"
+            android:id="@+id/apply_2_nowtime_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <EditText
@@ -32,16 +54,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="病歷號碼" />
+        android:hint="病歷號碼"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/apply_2_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="執行科別" />
+        android:hint="執行科別"
+        android:inputType="textPersonName" />
 
     <Spinner
         android:id="@+id/apply_2_location"
@@ -53,20 +75,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="其他地點" />
+        android:hint="其他地點"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/apply_2_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="病人狀態或診斷" />
+        android:hint="病人狀態或診斷"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/apply_2_save_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="存檔" />
+        android:background="@color/md_blue_400"
+        android:text="存  檔"
+        android:textColor="@color/colorWrite2" />
 </LinearLayout>

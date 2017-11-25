@@ -48,6 +48,8 @@ public class Fragment_setup_editprofile extends Fragment implements View.OnClick
     private Button btn_setup_confirm;
 
     private String userType="";
+    private String userName="";
+    private String userId="";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class Fragment_setup_editprofile extends Fragment implements View.OnClick
         edt_setup_new_password = (EditText) view.findViewById(R.id.id_setup_email);
         edt_setup_new_confirmpassword = (EditText) view.findViewById(R.id.id_setup_email);
 
-        btn_setup_back = (Button) view.findViewById(R.id.id_btn_setup_profile_back);
+        btn_setup_back = (Button) view.findViewById(R.id.setup_editprofile_back);
         btn_setup_confirm = (Button) view.findViewById(R.id.id_btn_setup_profile_confirm);
 
         btn_setup_back.setOnClickListener(this);
@@ -74,7 +76,7 @@ public class Fragment_setup_editprofile extends Fragment implements View.OnClick
 
         switch (v.getId()) {
 
-            case R.id.id_btn_setup_profile_back:
+            case R.id.setup_editprofile_back:
                 Fragment_setup fse = new Fragment_setup();
 
                 FragmentManager fm = getFragmentManager();
@@ -112,12 +114,14 @@ public class Fragment_setup_editprofile extends Fragment implements View.OnClick
                     List<UserAccount> items = db_data.getAll();
                     for (UserAccount i : items) {
                         userType = String.valueOf(i.getLoginRole()).toString();
+                        userName = String.valueOf(i.getUserName()).toString();
+                        userId = String.valueOf(i.getUserId()).toString();
                     }
 
                     if(userType.equals("teacher")){
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("userId","");
-                        map.put("userName", "");
+                        map.put("userId",userId);
+                        map.put("userName", userName);
                         map.put("email",edt_setup_email.getText().toString());
                         map.put("mobilePhone",edt_setup_cellphone.getText().toString());
                         map.put("phone",edt_setup_phone.getText().toString());
@@ -134,8 +138,8 @@ public class Fragment_setup_editprofile extends Fragment implements View.OnClick
                         }
                     }else{
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("userId","");
-                        map.put("userName", "");
+                        map.put("userId",userId);
+                        map.put("userName", userName);
                         map.put("email",edt_setup_email.getText().toString());
                         map.put("mobilePhone",edt_setup_cellphone.getText().toString());
                         map.put("phone",edt_setup_phone.getText().toString());

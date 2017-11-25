@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 public class Item_detail {
     private static final String TAG = Item_detail.class.getSimpleName();
+    public String documentSNo="";
     public String subject="臨床評量";
     public String teachername;
     public String sutdentName;
@@ -30,6 +31,8 @@ public class Item_detail {
                 teachername=teachername+"-"+sutdentName;
                 evaluateDateTime = jsonObject.get("evaluateDateTime").toString(); //學生新聞:表單流水號
                 status = jsonObject.get("status").toString(); //學生新聞:日期
+                documentSNo= jsonObject.get("documentSNo").toString();
+
 
                 Log.i(TAG,"teachername:"+teachername);
                 Log.i(TAG,"evaluateDateTime:"+evaluateDateTime);
@@ -42,5 +45,14 @@ public class Item_detail {
         }else{
             Log.e(TAG,"null");
         }
+    }
+    public String getStatus(){
+        return status;
+    }
+    public String getDocumentSNo(){
+        return documentSNo;
+    }
+    public String getevaluateDateTime(){
+        return evaluateDateTime;
     }
 }
